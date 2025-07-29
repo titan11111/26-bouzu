@@ -6,8 +6,8 @@
 }
 
 body {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: 'Yu Mincho', 'Hiragino Mincho ProN', 'Noto Serif JP', serif;
+  background: url('haikei.png') no-repeat center/cover fixed;
   min-height: 100vh;
   color: #333;
   line-height: 1.6;
@@ -22,7 +22,8 @@ body {
 
 header {
   text-align: center;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 240, 0.9);
+  border: 2px solid #b79255;
   padding: 20px;
   border-radius: 15px;
   margin-bottom: 20px;
@@ -181,8 +182,8 @@ header p {
 }
 
 .consultation-card {
-  background: #fff;
-  border: 2px solid #e2e8f0;
+  background: rgba(255, 255, 240, 0.95);
+  border: 2px solid #b79255;
   border-radius: 15px;
   padding: 25px;
   margin-bottom: 30px;
@@ -230,7 +231,7 @@ header p {
 }
 
 .advice-btn {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #d68c3d, #8c4517);
   color: white;
   border: none;
   padding: 18px 25px;
@@ -238,13 +239,13 @@ header p {
   font-size: 1.1em;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 16px rgba(214, 140, 61, 0.3);
   font-weight: bold;
 }
 
 .advice-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 6px 24px rgba(214, 140, 61, 0.4);
 }
 
 .advice-btn:active {
@@ -259,12 +260,12 @@ header p {
 }
 
 .result.success {
-  background: linear-gradient(135deg, #48bb78, #38a169);
+  background: linear-gradient(135deg, #d4af37, #b8860b);
   color: white;
 }
 
 .result.failure {
-  background: linear-gradient(135deg, #f56565, #e53e3e);
+  background: linear-gradient(135deg, #b71c1c, #7f0000);
   color: white;
 }
 
