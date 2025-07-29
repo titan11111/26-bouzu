@@ -30,6 +30,13 @@ header {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
+.monk-icon {
+  width: 80px;
+  height: 80px;
+  display: block;
+  margin: 0 auto 10px;
+}
+
 header h1 {
   font-size: 2em;
   color: #4a5568;
@@ -199,12 +206,19 @@ header p {
 }
 
 .visitor-icon {
-  font-size: 2.5em;
   margin-right: 15px;
   background: #f7fafc;
   padding: 10px;
   border-radius: 50%;
   border: 2px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.visitor-icon img {
+  width: 48px;
+  height: 48px;
 }
 
 .visitor-name {
