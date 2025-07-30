@@ -319,6 +319,14 @@ let maxStreak = 0;
 let gratitudeLevel = 50; // 感謝度（0-100）
 let angerLevel = 50; // 怒り度（0-100）
 let emotionBalance = 0; // -100（感謝MAX）〜0（中立）〜+100（怒りMAX）
+let currentVisitorType = 'human';
+
+function getVisitorType(name) {
+    if (name.includes('猫')) return 'cat';
+    if (name.includes('宇宙人')) return 'alien';
+    if (name.includes('主婦') || name.includes('母親')) return 'housewife';
+    return 'human';
+}
 
 // レベルアップメッセージ
 const levelUpMessages = [
@@ -513,6 +521,9 @@ function showConsultation() {
     document.getElementById('visitor-name').textContent = consultation.name;
     document.getElementById('consultation-text').textContent = consultation.problem;
 
+    currentVisitorType = getVisitorType(consultation.name);
+    document.getElementById('visitor-img').src = `images/${currentVisitorType}_neutral.svg`;
+
     // アドバイスボタンを設定
     const adviceButtons = document.querySelectorAll('.advice-btn');
     consultation.advice.forEach((advice, index) => {
@@ -568,6 +579,7 @@ function selectAdvice(selectedIndex) {
         emotionBalance = Math.max(-100, emotionBalance - 10); // 感謝方向
         
         resultElement.className = 'result success';
+        document.getElementById('visitor-img').src = `images/${currentVisitorType}_happy.svg`;
         resultText.textContent = `✨ 素晴らしいアドバイスです！ +${pointsEarned}ポイント ✨`;
         resultMessage.textContent = consultation.successMessage;
         
@@ -592,6 +604,7 @@ function selectAdvice(selectedIndex) {
         emotionBalance = Math.min(100, emotionBalance + 10); // 怒り方向
         
         resultElement.className = 'result failure';
+        document.getElementById('visitor-img').src = `images/${currentVisitorType}_sad.svg`;
         resultText.textContent = '😔 もう少し考えてみましょう... 😔';
         resultMessage.textContent = consultation.failureMessage;
         
