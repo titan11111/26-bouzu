@@ -533,6 +533,7 @@ function showConsultation() {
 
     // 結果を非表示
     document.getElementById('result').classList.add('hidden');
+    document.getElementById('selected-advice').textContent = '';
     document.getElementById('advice-buttons').style.display = 'flex';
 }
 
@@ -542,6 +543,7 @@ function selectAdvice(selectedIndex) {
     const resultElement = document.getElementById('result');
     const resultText = document.getElementById('result-text');
     const resultMessage = document.getElementById('result-message');
+    const selectedAdviceElement = document.getElementById('selected-advice');
 
     // ボタンを非表示
     document.getElementById('advice-buttons').style.display = 'none';
@@ -582,6 +584,7 @@ function selectAdvice(selectedIndex) {
         document.getElementById('visitor-img').src = `images/${currentVisitorType}_happy.svg`;
         resultText.textContent = `✨ 素晴らしいアドバイスです！ +${pointsEarned}ポイント ✨`;
         resultMessage.textContent = consultation.successMessage;
+        selectedAdviceElement.textContent = `あなた: ${consultation.advice[selectedIndex]}`;
         
         // コンボメッセージ表示
         showComboMessage();
@@ -607,6 +610,7 @@ function selectAdvice(selectedIndex) {
         document.getElementById('visitor-img').src = `images/${currentVisitorType}_sad.svg`;
         resultText.textContent = '😔 もう少し考えてみましょう... 😔';
         resultMessage.textContent = consultation.failureMessage;
+        selectedAdviceElement.textContent = `あなた: ${consultation.advice[selectedIndex]}`;
         
         // 失敗アニメーション
         resultElement.style.animation = 'failureShake 0.5s ease-out';
