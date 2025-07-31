@@ -367,6 +367,7 @@ function initGame() {
     angerLevel = 50;
     emotionBalance = 0;
 
+    updateMonkExpression('neutral');
     updateDisplay();
     showConsultation();
 }
@@ -432,6 +433,14 @@ function updateEmotionBar() {
     }
 }
 
+// 僧侶の表情を切り替え
+function updateMonkExpression(expression) {
+    const monkIcon = document.querySelector('.monk-icon');
+    if (monkIcon) {
+        monkIcon.src = `images/monk_${expression}.svg`;
+    }
+}
+
 // 経験値を追加
 function addExperience(amount) {
     experience += amount;
@@ -447,9 +456,13 @@ function levelUp() {
     level++;
     experience -= experienceToNextLevel;
     experienceToNextLevel = Math.floor(experienceToNextLevel * 1.2); // 次のレベルに必要な経験値を増加
-    
+
     // レベルアップメッセージを表示
     showLevelUpMessage();
+    setTimeout(() => {
+        updateMonkExpression('surprised');
+        setTimeout(() => updateMonkExpression('happy'), 1500);
+    }, 0);
 }
 
 // レベルアップメッセージを表示
@@ -585,6 +598,8 @@ function selectAdvice(selectedIndex) {
         resultText.textContent = `✨ 素晴らしいアドバイスです！ +${pointsEarned}ポイント ✨`;
         resultMessage.textContent = consultation.successMessage;
         selectedAdviceElement.textContent = `あなた: ${consultation.advice[selectedIndex]}`;
+
+        updateMonkExpression('happy');
         
         // コンボメッセージ表示
         showComboMessage();
@@ -611,6 +626,12 @@ function selectAdvice(selectedIndex) {
         resultText.textContent = '😔 もう少し考えてみましょう... 😔';
         resultMessage.textContent = consultation.failureMessage;
         selectedAdviceElement.textContent = `あなた: ${consultation.advice[selectedIndex]}`;
+
+        if (angerLevel > 70) {
+            updateMonkExpression('angry');
+        } else {
+            updateMonkExpression('sad');
+        }
         
         // 失敗アニメーション
         resultElement.style.animation = 'failureShake 0.5s ease-out';
@@ -627,6 +648,8 @@ function selectAdvice(selectedIndex) {
 function nextConsultation() {
     currentConsultation++;
     remainingVisitors--;
+
+    updateMonkExpression('neutral');
 
     if (currentConsultation >= gameConsultations.length) {
         // ゲーム終了
