@@ -82,36 +82,38 @@ header p {
 
 /* 統計情報コンテナ */
 .stats-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 10px;
-  margin-bottom: 20px;
-  padding: 15px;
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding: 10px;
   background: #f8fafc;
   border-radius: 10px;
   border: 2px solid #e2e8f0;
+  overflow-x: auto;
 }
 
 .stat-item {
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 8px;
+  padding: 6px;
   background: white;
   border-radius: 8px;
   border: 1px solid #e2e8f0;
+  min-width: 80px;
 }
 
 .stat-label {
-  font-size: 0.8em;
+  font-size: 0.75em;
   color: #666;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
   font-weight: bold;
 }
 
 .stat-value {
-  font-size: 1.1em;
+  font-size: 1em;
   font-weight: bold;
   color: #4a5568;
 }
@@ -476,21 +478,21 @@ header p {
   }
   
   .stats-container {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-      padding: 10px;
+      gap: 6px;
+      padding: 8px;
   }
-  
+
   .stat-item {
-      padding: 6px;
+      padding: 4px;
+      min-width: 70px;
   }
-  
+
   .stat-label {
       font-size: 0.7em;
   }
-  
+
   .stat-value {
-      font-size: 1em;
+      font-size: 0.9em;
   }
   
   .emotion-bar {
