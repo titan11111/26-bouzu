@@ -5,12 +5,25 @@
   box-sizing: border-box;
 }
 
+:root {
+  --paper: rgba(248, 244, 230, 0.95);
+  --ink: #3c2f2f;
+  --accent: #c85554;
+  --accent-dark: #a94442;
+  --border: #8c5a3f;
+  --secondary: rgba(248, 244, 230, 0.8);
+}
+
 body {
-  font-family: 'Yu Mincho', 'Hiragino Mincho ProN', 'Noto Serif JP', serif;
+  font-family: 'Sawarabi Mincho', 'Yu Mincho', serif;
   background: url('haikei.png') no-repeat center/cover fixed;
   min-height: 100vh;
-  color: #333;
+  color: var(--ink);
   line-height: 1.6;
+}
+
+button, input, textarea {
+  font-family: inherit;
 }
 
 .container {
@@ -22,8 +35,8 @@ body {
 
 header {
   text-align: center;
-  background: rgba(255, 255, 240, 0.9);
-  border: 2px solid #b79255;
+  background: var(--paper);
+  border: 2px solid var(--border);
   padding: 20px;
   border-radius: 15px;
   margin-bottom: 20px;
@@ -39,17 +52,17 @@ header {
 
 header h1 {
   font-size: 2em;
-  color: #4a5568;
+  color: var(--accent);
   margin-bottom: 10px;
 }
 
 header p {
-  color: #666;
+  color: var(--ink);
   font-size: 1.1em;
 }
 
 .game-area {
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--paper);
   padding: 30px;
   border-radius: 15px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
@@ -61,23 +74,19 @@ header p {
   align-items: center;
   margin-bottom: 30px;
   padding: 15px;
-  background: #f7fafc;
+  background: var(--secondary);
   border-radius: 10px;
-  border: 2px solid #e2e8f0;
+  border: 2px solid var(--border);
 }
 
 .score, .remaining {
   font-weight: bold;
   font-size: 1.1em;
-  color: #4a5568;
+  color: var(--ink);
 }
 
-.score span {
-  color: #38a169;
-}
-
-.remaining span {
-  color: #3182ce;
+.score span, .remaining span {
+  color: var(--accent);
 }
 
 /* 統計情報コンテナ */
@@ -86,9 +95,9 @@ header p {
   gap: 8px;
   margin-bottom: 10px;
   padding: 10px;
-  background: #f8fafc;
+  background: var(--secondary);
   border-radius: 10px;
-  border: 2px solid #e2e8f0;
+  border: 2px solid var(--border);
   overflow-x: auto;
 }
 
@@ -99,15 +108,15 @@ header p {
   align-items: center;
   text-align: center;
   padding: 6px;
-  background: white;
+  background: var(--paper);
   border-radius: 8px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border);
   min-width: 80px;
 }
 
 .stat-label {
   font-size: 0.75em;
-  color: #666;
+  color: var(--ink);
   margin-bottom: 2px;
   font-weight: bold;
 }
@@ -115,7 +124,7 @@ header p {
 .stat-value {
   font-size: 1em;
   font-weight: bold;
-  color: #4a5568;
+  color: var(--accent);
 }
 
 /* 感情バー */
@@ -126,22 +135,22 @@ header p {
   gap: 10px;
   margin-bottom: 20px;
   padding: 10px;
-  background: #f8fafc;
+  background: var(--secondary);
   border-radius: 10px;
-  border: 2px solid #e2e8f0;
+  border: 2px solid var(--border);
 }
 
 .emotion-label {
   font-size: 0.9em;
   font-weight: bold;
-  color: #4a5568;
+  color: var(--ink);
   white-space: nowrap;
 }
 
 .emotion-progress {
   flex: 1;
   height: 8px;
-  background: #e2e8f0;
+  background: var(--paper);
   border-radius: 4px;
   overflow: hidden;
   position: relative;
@@ -149,7 +158,7 @@ header p {
 
 .emotion-fill {
   height: 100%;
-  background: linear-gradient(90deg, #38a169 0%, #3182ce 50%, #e53e3e 100%);
+  background: linear-gradient(90deg, #6b8e23 0%, var(--accent) 100%);
   border-radius: 4px;
   transition: width 0.5s ease, left 0.5s ease, background 0.5s;
   width: 50%;
@@ -191,8 +200,8 @@ header p {
 }
 
 .consultation-card {
-  background: rgba(255, 255, 240, 0.95);
-  border: 2px solid #b79255;
+  background: var(--paper);
+  border: 2px solid var(--border);
   border-radius: 15px;
   padding: 25px;
   margin-bottom: 30px;
@@ -204,15 +213,15 @@ header p {
   align-items: center;
   margin-bottom: 20px;
   padding-bottom: 15px;
-  border-bottom: 2px solid #f1f5f9;
+  border-bottom: 2px solid var(--border);
 }
 
 .visitor-icon {
   margin-right: 15px;
-  background: #f7fafc;
+  background: var(--secondary);
   padding: 10px;
   border-radius: 50%;
-  border: 2px solid #e2e8f0;
+  border: 2px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -226,17 +235,17 @@ header p {
 .visitor-name {
   font-size: 1.3em;
   font-weight: bold;
-  color: #4a5568;
+  color: var(--ink);
 }
 
 .consultation-text {
   font-size: 1.2em;
   line-height: 1.8;
-  color: #2d3748;
-  background: #f8fafc;
+  color: var(--ink);
+  background: var(--secondary);
   padding: 20px;
   border-radius: 10px;
-  border-left: 4px solid #667eea;
+  border-left: 4px solid var(--accent);
   position: relative;
   margin-bottom: 20px;
 }
@@ -248,7 +257,7 @@ header p {
   left: -12px;
   border-width: 8px;
   border-style: solid;
-  border-color: transparent #667eea transparent transparent;
+  border-color: transparent var(--accent) transparent transparent;
 }
 
 .advice-buttons {
@@ -259,7 +268,7 @@ header p {
 }
 
 .advice-btn {
-  background: linear-gradient(135deg, #d68c3d, #8c4517);
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
   color: white;
   border: none;
   padding: 18px 25px;
@@ -267,13 +276,13 @@ header p {
   font-size: 1.1em;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 16px rgba(214, 140, 61, 0.3);
+  box-shadow: 0 4px 16px rgba(200, 85, 84, 0.3);
   font-weight: bold;
 }
 
 .advice-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(214, 140, 61, 0.4);
+  box-shadow: 0 6px 24px rgba(200, 85, 84, 0.4);
 }
 
 .advice-btn:active {
@@ -288,12 +297,12 @@ header p {
 }
 
 .result.success {
-  background: linear-gradient(135deg, #d4af37, #b8860b);
+  background: linear-gradient(135deg, #c0a36e, var(--border));
   color: white;
 }
 
 .result.failure {
-  background: linear-gradient(135deg, #b71c1c, #7f0000);
+  background: linear-gradient(135deg, var(--accent), #7b2d26);
   color: white;
 }
 
@@ -313,11 +322,11 @@ header p {
   position: relative;
   font-size: 1.1em;
   line-height: 1.6;
-  color: #2d3748;
-  background: #ebf8ff;
+  color: var(--ink);
+  background: var(--secondary);
   padding: 15px;
   border-radius: 10px;
-  border-left: 4px solid #3182ce;
+  border-left: 4px solid var(--accent);
   margin-bottom: 15px;
 }
 
@@ -328,13 +337,14 @@ header p {
   left: -12px;
   border-width: 8px;
   border-style: solid;
-  border-color: transparent #3182ce transparent transparent;
+  border-color: transparent var(--accent) transparent transparent;
 }
 
+
 .next-btn, .restart-btn {
-  background: rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
   color: white;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid var(--border);
   padding: 12px 30px;
   border-radius: 8px;
   font-size: 1.1em;
@@ -344,14 +354,14 @@ header p {
 }
 
 .next-btn:hover, .restart-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
   transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(200, 85, 84, 0.4);
 }
 
 .game-over {
   text-align: center;
   padding: 40px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, var(--accent), var(--border));
   color: white;
   border-radius: 15px;
 }
@@ -367,15 +377,14 @@ header p {
   margin-bottom: 15px;
 }
 
+
 .rating {
   font-size: 1.3em;
   margin-bottom: 30px;
-  color: #ffd700;
+  color: var(--accent);
 }
 
 .restart-btn {
-  background: rgba(255, 255, 255, 0.2);
-  border: 2px solid rgba(255, 255, 255, 0.3);
   padding: 15px 40px;
   font-size: 1.2em;
 }
@@ -446,10 +455,10 @@ header p {
 
 @keyframes comboGlow {
   from {
-    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 4px 16px rgba(200, 85, 84, 0.3);
   }
   to {
-    box-shadow: 0 4px 20px rgba(255, 107, 107, 0.6);
+    box-shadow: 0 4px 20px rgba(140, 90, 63, 0.6);
   }
 }
 
