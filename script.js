@@ -10,7 +10,7 @@ const consultations = [
         ],
         correct: 1,
         successMessage: "「心が少し軽くなりました」",
-        failureMessage: "「無人島に移住って...それ現実的じゃないですよ？僧侶様、Wi-Fiもないんですよ？」"
+        failureMessage: "「無人島に移住って...それ現実的じゃないですよ？Wi-Fiもないんですよ？」"
     },
     {
         name: "佐藤さん（主婦・ドラマ好き）",
@@ -34,7 +34,7 @@ const consultations = [
         ],
         correct: 1,
         successMessage: "「時間をかけて癒していきます」",
-        failureMessage: "「元彼の家の前で歌を歌うって...それ恥ずかしいですよ？僧侶様、近所迷惑になりますよ？」"
+        failureMessage: "「元彼の家の前で歌を歌うって...それ恥ずかしいですよ？近所迷惑になりますよ？」"
     },
     {
         name: "高橋さん（サラリーマン・貯金マニア）",
@@ -46,7 +46,7 @@ const consultations = [
         ],
         correct: 0,
         successMessage: "「今あるものに感謝してみます」",
-        failureMessage: "「宝くじに全財産を賭けるって...それ破産しますよ？僧侶様、お金の相談なのに何を言ってるんですか？」"
+        failureMessage: "「宝くじに全財産を賭けるって...それ破産しますよ？お金の相談なのに何を言ってるんですか？」"
     },
     {
         name: "伊藤さん",
@@ -70,7 +70,7 @@ const consultations = [
         ],
         correct: 1,
         successMessage: "「子供の成長を見守ります」",
-        failureMessage: "「子供を祖父母に預けっぱなしにするって...それ親の責任放棄ですよ？僧侶様、母親失格ですよ？」"
+        failureMessage: "「子供を祖父母に預けっぱなしにするって...それ親の責任放棄ですよ？母親失格ですよ？」"
     },
     {
         name: "小林さん（OL・人見知り）",
@@ -82,7 +82,7 @@ const consultations = [
         ],
         correct: 1,
         successMessage: "「少しずつ心を開いてみます」",
-        failureMessage: "「友達のSNSを毎日チェックするって...それストーカー行為ですよ？僧侶様、友達関係の相談なのに何を言ってるんですか？」"
+        failureMessage: "「友達のSNSを毎日チェックするって...それストーカー行為ですよ？友達関係の相談なのに何を言ってるんですか？」"
     },
     {
         name: "池田さん（ニート・引きこもり）",
@@ -94,7 +94,7 @@ const consultations = [
         ],
         correct: 0,
         successMessage: "「小さなことから始めてみます」",
-        failureMessage: "「引きこもりを続けるって...それ現実逃避ですよ？僧侶様、人生の相談なのに何を言ってるんですか？」"
+        failureMessage: "「引きこもりを続けるって...それ現実逃避ですよ？人生の相談なのに何を言ってるんですか？」"
     },
     {
         name: "橋本さん（エリート会社員・完璧主義）",
@@ -106,7 +106,7 @@ const consultations = [
         ],
         correct: 1,
         successMessage: "「不完全な自分も受け入れてみます」",
-        failureMessage: "「部下を説教しまくるって...それパワハラですよ？僧侶様、会社の相談じゃないんです」"
+        failureMessage: "「部下を説教しまくるって...それパワハラですよ？会社の相談じゃないんです」"
     },
     {
         name: "山口さん（主婦・短気）",
@@ -118,7 +118,7 @@ const consultations = [
         ],
         correct: 0,
         successMessage: "「現実を受け入れて心を落ち着かせます」",
-        failureMessage: "「家の家具を買い替えるって...それ家計に響きますよ？僧侶様、主婦の相談なのに何を言ってるんですか？」"
+        failureMessage: "「家の家具を買い替えるって...それ家計に響きますよ？主婦の相談なのに何を言ってるんですか？」"
     },
     {
         name: "松本さん（高校生・勉強嫌い）",
@@ -130,7 +130,7 @@ const consultations = [
         ],
         correct: 1,
         successMessage: "「一歩ずつ頑張ってみます」",
-        failureMessage: "「学校をサボりまくるって...それ留年しますよ？僧侶様、高校生の相談なのに何を言ってるんですか？」"
+        failureMessage: "「学校をサボりまくるって...それ留年しますよ？高校生の相談なのに何を言ってるんですか？」"
     },
     {
         name: "中村さん（定年退職者・年齢コンプレックス）",
@@ -142,7 +142,7 @@ const consultations = [
         ],
         correct: 0,
         successMessage: "「人生の経験を大切にします」",
-        failureMessage: "「若返りサプリを飲みまくるって...それ効果不明ですよ？僧侶様、年金生活者の相談なのに何を言ってるんですか？」"
+        failureMessage: "「若返りサプリを飲みまくるって...それ効果不明ですよ？年金生活者の相談なのに何を言ってるんですか？」"
     },
     {
         name: "木村さん（新入社員・内気）",
@@ -154,7 +154,7 @@ const consultations = [
         ],
         correct: 1,
         successMessage: "「少しずつ表現してみます」",
-        failureMessage: "「会社をサボりまくるって...それクビになりますよ？僧侶様、新入社員の相談なのに何を言ってるんですか？」"
+        failureMessage: "「会社をサボりまくるって...それクビになりますよ？新入社員の相談なのに何を言ってるんですか？」"
     },
     {
         name: "清水さん（SNS中毒・比較好き）",
@@ -166,7 +166,7 @@ const consultations = [
         ],
         correct: 0,
         successMessage: "「自分の歩みを大切にします」",
-        failureMessage: "「SNSで自慢の投稿をするって...それ嫌われますよ？僧侶様、SNSの相談じゃないんです」"
+        failureMessage: "「SNSで自慢の投稿をするって...それ嫌われますよ？SNSの相談じゃないんです」"
     },
     {
         name: "吉田さん（主婦・罪悪感の塊）",
@@ -202,7 +202,7 @@ const consultations = [
         ],
         correct: 1,
         successMessage: "「自分のペースで歩んでみます」",
-        failureMessage: "「期待に応えることが人生の目的って...それプレッシャーを増やしてますよ？僧侶様、プレッシャーの相談なのに何を言ってるんですか？」"
+        failureMessage: "「期待に応えることが人生の目的って...それプレッシャーを増やしてますよ？プレッシャーの相談なのに何を言ってるんですか？」"
     },
     {
         name: "山田さん（被災者・絶望中）",
@@ -214,7 +214,7 @@ const consultations = [
         ],
         correct: 0,
         successMessage: "「命を大切に生きてみます」",
-        failureMessage: "「すべてを諦めるべきって...それ絶望的ですよ？僧侶様、被災者の相談なのに何を言ってるんですか？」"
+        failureMessage: "「すべてを諦めるべきって...それ絶望的ですよ？被災者の相談なのに何を言ってるんですか？」"
     },
     {
         name: "藤田さん（教師・短気）",
@@ -226,7 +226,7 @@ const consultations = [
         ],
         correct: 0,
         successMessage: "「心を静めて見つめてみます」",
-        failureMessage: "「怒りは自然なので出し続けるって...それ暴力を助長してますよ？僧侶様、短気の相談なのに何を言ってるんですか？」"
+        failureMessage: "「怒りは自然なので出し続けるって...それ暴力を助長してますよ？短気の相談なのに何を言ってるんですか？」"
     },
     {
         name: "野村さん（芸術家・現実逃避中）",
@@ -238,7 +238,7 @@ const consultations = [
         ],
         correct: 0,
         successMessage: "「バランスを取りながら歩んでみます」",
-        failureMessage: "「夢は諦めるべきって...それ人生が終わってしまいますよ？僧侶様、夢の相談なのに何を言ってるんですか？」"
+        failureMessage: "「夢は諦めるべきって...それ人生が終わってしまいますよ？夢の相談なのに何を言ってるんですか？」"
     },
     {
         name: "メジェドさん（中東の商人・金儲けに悩み中）",
@@ -250,7 +250,7 @@ const consultations = [
         ],
         correct: 0,
         successMessage: "「誠実さを大切にします」",
-        failureMessage: "「もっと強引に商売するって...それ詐欺ですよ？僧侶様、商売の相談なのに何を言ってるんですか？」"
+        failureMessage: "「もっと強引に商売するって...それ詐欺ですよ？商売の相談なのに何を言ってるんですか？」"
     },
     {
         name: "宇宙人（地球人に興味津々）",
@@ -262,7 +262,7 @@ const consultations = [
         ],
         correct: 0,
         successMessage: "「地球人の文化を理解してみます」",
-        failureMessage: "「地球人を洗脳するって...それ侵略行為ですよ？僧侶様、コミュニケーションの相談なのに何を言ってるんですか？」"
+        failureMessage: "「地球人を洗脳するって...それ侵略行為ですよ？コミュニケーションの相談なのに何を言ってるんですか？」"
     },
     {
         name: "猫さんたち（野良猫集団・縄張り争い中）",
@@ -274,7 +274,7 @@ const consultations = [
         ],
         correct: 0,
         successMessage: "「共存の道を探してみます」",
-        failureMessage: "「他の猫を追い出すって...それ縄張り争いですよ？僧侶様、猫の相談なのに何を言ってるんですか？」"
+        failureMessage: "「他の猫を追い出すって...それ縄張り争いですよ？猫の相談なのに何を言ってるんですか？」"
     },
     {
         name: "魔王（世界征服に疲れ中）",
@@ -286,7 +286,7 @@ const consultations = [
         ],
         correct: 0,
         successMessage: "「部下と協力してみます」",
-        failureMessage: "「部下を説教するって...それ部下が辞めてしまいますよ？僧侶様、リーダーシップの相談なのに何を言ってるんですか？」"
+        failureMessage: "「部下を説教するって...それ部下が辞めてしまいますよ？リーダーシップの相談なのに何を言ってるんですか？」"
     },
     {
         name: "工場労働者たち（過酷な労働に疲れ中）",
@@ -298,22 +298,23 @@ const consultations = [
         ],
         correct: 0,
         successMessage: "「働きやすい職場を作ってみます」",
-        failureMessage: "「ストライキを起こすって...それ会社が潰れてしまいますよ？僧侶様、労働環境の相談なのに何を言ってるんですか？」"
+        failureMessage: "「ストライキを起こすって...それ会社が潰れてしまいますよ？労働環境の相談なのに何を言ってるんですか？」"
     }
 ];
 
-const MIN_ADVICE_LENGTH = 50;
+const MAX_LINE_LENGTH = 25;
 function formatAdviceText(text) {
     let t = text.trim();
-    const padding = "。心を落ち着け、自分の内側を静かに見つめ、穏やかな呼吸を続けましょう。";
-    while (t.length < MIN_ADVICE_LENGTH) {
-        t += padding;
+    if (t.length > MAX_LINE_LENGTH * 2) {
+        t = t.slice(0, MAX_LINE_LENGTH * 2 - 1) + '…';
     }
-    const midpoint = Math.ceil(t.length / 2);
-    return t.slice(0, midpoint) + "\n" + t.slice(midpoint);
+    if (t.length > MAX_LINE_LENGTH) {
+        return t.slice(0, MAX_LINE_LENGTH) + "\n" + t.slice(MAX_LINE_LENGTH);
+    }
+    return t;
 }
 
-// 全ての僧侶の回答を二行・五十字以上に整形
+// 全ての僧侶の回答を最大二行に整形
 consultations.forEach(c => {
     c.advice = c.advice.map(formatAdviceText);
 });
@@ -640,7 +641,7 @@ function selectAdvice(selectedIndex) {
         resultElement.className = 'result failure';
         document.getElementById('visitor-img').src = `images/${currentVisitorType}_sad.svg`;
         resultText.textContent = '😔 もう少し考えてみましょう... 😔';
-        resultMessage.textContent = `${consultation.failureMessage} ${consultation.failureMessage}`;
+        resultMessage.textContent = consultation.failureMessage;
         selectedAdviceElement.textContent = `あなた: ${consultation.advice[selectedIndex]}`;
 
         if (angerLevel > 70) {
