@@ -302,6 +302,22 @@ const consultations = [
     }
 ];
 
+const MIN_ADVICE_LENGTH = 50;
+function formatAdviceText(text) {
+    let t = text.trim();
+    const padding = "。心を落ち着け、自分の内側を静かに見つめ、穏やかな呼吸を続けましょう。";
+    while (t.length < MIN_ADVICE_LENGTH) {
+        t += padding;
+    }
+    const midpoint = Math.ceil(t.length / 2);
+    return t.slice(0, midpoint) + "\n" + t.slice(midpoint);
+}
+
+// 全ての僧侶の回答を二行・五十字以上に整形
+consultations.forEach(c => {
+    c.advice = c.advice.map(formatAdviceText);
+});
+
 // ゲーム状態
 let currentConsultation = 0;
 let score = 0;
