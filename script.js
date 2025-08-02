@@ -624,7 +624,7 @@ function selectAdvice(selectedIndex) {
         resultElement.className = 'result failure';
         document.getElementById('visitor-img').src = `images/${currentVisitorType}_sad.svg`;
         resultText.textContent = '😔 もう少し考えてみましょう... 😔';
-        resultMessage.textContent = consultation.failureMessage;
+        resultMessage.textContent = `${consultation.failureMessage} ${consultation.failureMessage}`;
         selectedAdviceElement.textContent = `あなた: ${consultation.advice[selectedIndex]}`;
 
         if (angerLevel > 70) {
