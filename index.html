@@ -189,6 +189,12 @@
           line-height: 1.5;
         }
 
+        .selected-advice {
+          font-size: 0.9em;
+          margin-bottom: 15px;
+          line-height: 1.5;
+        }
+
         .next-btn {
           background: rgba(255, 255, 255, 0.2);
           color: white;
@@ -407,6 +413,7 @@
         <div id="result" class="result hidden">
             <div class="result-text" id="result-text"></div>
             <div class="result-message" id="result-message"></div>
+            <div class="selected-advice" id="selected-advice"></div>
             <button class="next-btn" onclick="nextConsultation()">次の相談者へ</button>
         </div>
 
@@ -738,10 +745,52 @@
             }
         ];
 
+        const specialConsultations = {
+            5: {
+                name: "餓鬼",
+                icon: "👻",
+                problem: "常に飢えて心が満たされません。どうすれば良いでしょうか？",
+                advice: [
+                    "食べ放題に行きましょう",
+                    "欲を手放し、施しを受け入れましょう",
+                    "人の食べ物を奪いましょう"
+                ],
+                correct: 1,
+                successMessage: "「少し心が満たされました」",
+                failureMessage: "「食べ放題って...さらに欲が出てしまいますよ？」"
+            },
+            7: {
+                name: "阿修羅",
+                icon: "⚔️",
+                problem: "怒りが抑えられず、常に戦いを求めてしまいます。どうすれば静まりますか？",
+                advice: [
+                    "世界征服を目指しましょう",
+                    "怒りを静め、争いを手放しましょう",
+                    "もっと戦いましょう"
+                ],
+                correct: 1,
+                successMessage: "「争いよりも静けさを選びます」",
+                failureMessage: "「世界征服って...さらに戦が増えるだけです！」"
+            },
+            9: {
+                name: "地獄の鬼",
+                icon: "👹",
+                problem: "地獄での責め苦が忙しく、心が休まりません。どうすれば良いですか？",
+                advice: [
+                    "人間界で息抜きしましょう",
+                    "苦しむ者を助ける心を持ちましょう",
+                    "責め苦をさらに強めましょう"
+                ],
+                correct: 1,
+                successMessage: "「少し慈悲の心が芽生えました」",
+                failureMessage: "「息抜きって...地獄の仕事をサボれません！」"
+            }
+        };
+
         // ゲーム状態
         let currentConsultation = 0;
         let score = 0;
-        let remainingVisitors = 24;
+        let remainingVisitors = consultations.length;
         let gameConsultations = [];
         let combo = 0;
         let maxCombo = 0;
@@ -755,7 +804,7 @@
 
             currentConsultation = 0;
             score = 0;
-            remainingVisitors = 24;
+            remainingVisitors = consultations.length;
             combo = 0;
             maxCombo = 0;
             totalCorrect = 0;
@@ -804,6 +853,7 @@
 
             // 結果を非表示
             document.getElementById('result').classList.add('hidden');
+            document.getElementById('selected-advice').textContent = '';
             document.getElementById('advice-buttons').style.display = 'flex';
         }
 
@@ -813,6 +863,7 @@
             const resultElement = document.getElementById('result');
             const resultText = document.getElementById('result-text');
             const resultMessage = document.getElementById('result-message');
+            const selectedAdviceElement = document.getElementById('selected-advice');
 
             // ボタンを非表示
             document.getElementById('advice-buttons').style.display = 'none';
@@ -832,6 +883,7 @@
                 resultElement.className = 'result success';
                 resultText.textContent = `✨ 素晴らしいアドバイスです！ +${pointsEarned}ポイント ✨`;
                 resultMessage.textContent = consultation.successMessage;
+                selectedAdviceElement.textContent = '';
 
                 // コンボエフェクト表示
                 showComboEffect();
@@ -844,6 +896,12 @@
                 resultElement.className = 'result failure';
                 resultText.textContent = '😔 もう少し考えてみましょう... 😔';
                 resultMessage.textContent = consultation.failureMessage;
+                selectedAdviceElement.textContent = `あなた: ${consultation.advice[selectedIndex]}`;
+
+                if (specialConsultations[totalIncorrect]) {
+                    gameConsultations.splice(currentConsultation + 1, 0, specialConsultations[totalIncorrect]);
+                    remainingVisitors++;
+                }
             }
 
             resultElement.classList.remove('hidden');
