@@ -1,1002 +1,178 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>僧侶の相談ゲーム</title>
-    <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&display=swap" rel="stylesheet">
-    <style>
-        /* リセットCSS */
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-        }
-
-        :root {
-          --paper: rgba(248, 244, 230, 0.95);
-          --ink: #3c2f2f;
-          --accent: #c85554;
-          --accent-dark: #a94442;
-          --border: #8c5a3f;
-          --secondary: rgba(248, 244, 230, 0.8);
-          --success: #38a169;
-          --failure: #e53e3e;
-        }
-
-        body {
-          font-family: 'Sawarabi Mincho', 'Yu Mincho', serif;
-          background: linear-gradient(135deg, #8b4513, #d2691e);
-          min-height: 100vh;
-          color: var(--ink);
-          line-height: 1.6;
-        }
-
-        .container {
-          max-width: 600px;
-          margin: 0 auto;
-          padding: 10px;
-          min-height: 100vh;
-        }
-
-        /* シンプルなヘッダー */
-        .header {
-          text-align: center;
-          background: var(--paper);
-          border: 2px solid var(--border);
-          padding: 15px;
-          border-radius: 10px;
-          margin-bottom: 15px;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-        }
-
-        .header h1 {
-          font-size: 1.4em;
-          color: var(--accent);
-          margin-bottom: 5px;
-        }
-
-        /* コンパクトな状態表示 */
-        .status {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          background: var(--secondary);
-          padding: 10px 15px;
-          border-radius: 8px;
-          margin-bottom: 15px;
-          border: 1px solid var(--border);
-          font-size: 0.9em;
-        }
-
-        .status-item {
-          display: flex;
-          align-items: center;
-          gap: 5px;
-        }
-
-        .status-value {
-          font-weight: bold;
-          color: var(--accent);
-        }
-
-        /* メインの相談カード */
-        .consultation-card {
-          background: var(--paper);
-          border: 2px solid var(--border);
-          border-radius: 12px;
-          padding: 20px;
-          margin-bottom: 20px;
-          box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
-        }
-
-        .visitor-info {
-          display: flex;
-          align-items: center;
-          margin-bottom: 15px;
-          padding-bottom: 10px;
-          border-bottom: 1px solid var(--border);
-        }
-
-        .visitor-icon {
-          width: 40px;
-          height: 40px;
-          background: var(--secondary);
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-right: 10px;
-          border: 1px solid var(--border);
-          font-size: 1.2em;
-        }
-
-        .visitor-name {
-          font-size: 1.1em;
-          font-weight: bold;
-          color: var(--ink);
-        }
-
-        .consultation-text {
-          font-size: 1.2em;
-          line-height: 1.7;
-          color: var(--ink);
-          background: var(--secondary);
-          padding: 20px;
-          border-radius: 10px;
-          border-left: 4px solid var(--accent);
-          margin-bottom: 20px;
-        }
-
-        /* アドバイスボタン */
-        .advice-buttons {
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-        }
-
-        .advice-btn {
-          background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-          color: white;
-          border: none;
-          padding: 15px 20px;
-          border-radius: 10px;
-          font-size: 1em;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          box-shadow: 0 3px 12px rgba(200, 85, 84, 0.3);
-          font-weight: bold;
-          text-align: left;
-        }
-
-        .advice-btn:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 5px 20px rgba(200, 85, 84, 0.4);
-        }
-
-        .advice-btn:active {
-          transform: translateY(0);
-        }
-
-        /* 結果表示 */
-        .result {
-          text-align: center;
-          padding: 20px;
-          border-radius: 12px;
-          margin-bottom: 15px;
-          animation: resultSlideIn 0.5s ease-out;
-        }
-
-        .result.success {
-          background: linear-gradient(135deg, var(--success), #2d7a3d);
-          color: white;
-        }
-
-        .result.failure {
-          background: linear-gradient(135deg, var(--failure), #c53030);
-          color: white;
-        }
-
-        .result-text {
-          font-size: 1.3em;
-          font-weight: bold;
-          margin-bottom: 10px;
-        }
-
-        .result-message {
-          font-size: 1em;
-          margin-bottom: 15px;
-          line-height: 1.5;
-        }
-
-        .selected-advice {
-          font-size: 0.9em;
-          margin-bottom: 15px;
-          line-height: 1.5;
-        }
-
-        .next-btn {
-          background: rgba(255, 255, 255, 0.2);
-          color: white;
-          border: 2px solid rgba(255, 255, 255, 0.3);
-          padding: 10px 25px;
-          border-radius: 8px;
-          font-size: 1em;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          font-weight: bold;
-        }
-
-        .next-btn:hover {
-          background: rgba(255, 255, 255, 0.3);
-          transform: translateY(-1px);
-        }
-
-        /* ゲーム終了画面 */
-        .game-over {
-          text-align: center;
-          padding: 30px;
-          background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-          color: white;
-          border-radius: 15px;
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        }
-
-        .game-over h2 {
-          font-size: 1.8em;
-          margin-bottom: 15px;
-        }
-
-        .final-score {
-          font-size: 1.4em;
-          font-weight: bold;
-          margin-bottom: 15px;
-        }
-
-        .rating {
-          font-size: 1.1em;
-          margin-bottom: 20px;
-          background: rgba(255, 255, 255, 0.1);
-          padding: 15px;
-          border-radius: 10px;
-        }
-
-        .restart-btn {
-          background: rgba(255, 255, 255, 0.2);
-          color: white;
-          border: 2px solid rgba(255, 255, 255, 0.3);
-          padding: 12px 30px;
-          border-radius: 8px;
-          font-size: 1.1em;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          font-weight: bold;
-        }
-
-        .restart-btn:hover {
-          background: rgba(255, 255, 255, 0.3);
-          transform: translateY(-1px);
-        }
-
-        .hidden {
-          display: none;
-        }
-
-        /* アニメーション */
-        @keyframes resultSlideIn {
-          from {
-            opacity: 0;
-            transform: translateY(-20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        /* コンボエフェクト */
-        .combo-effect {
-          position: fixed;
-          top: 20%;
-          left: 50%;
-          transform: translateX(-50%);
-          background: linear-gradient(135deg, #ffd700, #ffed4e);
-          color: #333;
-          padding: 10px 20px;
-          border-radius: 20px;
-          font-size: 1em;
-          font-weight: bold;
-          z-index: 1000;
-          animation: comboSlide 2s ease-out forwards;
-          box-shadow: 0 4px 16px rgba(255, 215, 0, 0.4);
-        }
-
-        @keyframes comboSlide {
-          0% {
-            opacity: 0;
-            transform: translateX(-50%) scale(0.8);
-          }
-          20% {
-            opacity: 1;
-            transform: translateX(-50%) scale(1.1);
-          }
-          80% {
-            opacity: 1;
-            transform: translateX(-50%) scale(1);
-          }
-          100% {
-            opacity: 0;
-            transform: translateX(-50%) scale(0.9);
-          }
-        }
-
-        /* スマホ対応 */
-        @media (max-width: 768px) {
-          .container {
-            padding: 8px;
-          }
-          
-          .header h1 {
-            font-size: 1.2em;
-          }
-          
-          .consultation-card {
-            padding: 15px;
-          }
-          
-          .consultation-text {
-            font-size: 1.1em;
-            padding: 15px;
-          }
-          
-          .advice-btn {
-            padding: 12px 15px;
-            font-size: 0.95em;
-          }
-          
-          .status {
-            flex-direction: column;
-            gap: 8px;
-            text-align: center;
-            font-size: 0.85em;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .container {
-            padding: 5px;
-          }
-          
-          .header {
-            padding: 10px;
-          }
-          
-          .consultation-card {
-            padding: 12px;
-          }
-          
-          .advice-btn {
-            padding: 10px 12px;
-            font-size: 0.9em;
-          }
-        }
-    </style>
+<meta charset="UTF-8">
+<title>僧侶の相談ゲーム</title>
+<style>
+body {font-family: 'Sawarabi Mincho', 'Yu Mincho', serif;background: #f5f5dc;margin:0;padding:20px;}
+.status{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
+.status-item{background:#fff;padding:5px 10px;border:1px solid #ccc;border-radius:4px;}
+.advice-buttons{display:flex;flex-direction:column;gap:5px;margin-top:10px;}
+.result{margin-top:15px;padding:10px;border-radius:4px;white-space:pre-line;}
+.result.success{background:#e0ffe0;}
+.result.failure{background:#ffe0e0;}
+</style>
 </head>
 <body>
-    <div class="container">
-        <!-- シンプルなヘッダー -->
-        <div class="header">
-            <h1>⛩️ 住職のお悩み相談所 ⛩️</h1>
-        </div>
+<h1>僧侶の相談ゲーム</h1>
+<div class="status">
+  <div class="status-item">感謝:<span id="score">0</span></div>
+  <div class="status-item">残り:<span id="remaining">0</span></div>
+  <div class="status-item">コンボ:<span id="combo">0</span></div>
+</div>
+<div class="status">
+  <div class="status-item">慈悲:<span id="stat-compassion">0</span></div>
+  <div class="status-item">真理:<span id="stat-truth">0</span></div>
+  <div class="status-item">無常観:<span id="stat-impermanence">0</span></div>
+  <div class="status-item">求道心:<span id="stat-quest">0</span></div>
+</div>
 
-        <!-- コンパクトな状態表示 -->
-        <div class="status">
-            <div class="status-item">
-                <span>感謝:</span>
-                <span class="status-value" id="score">0</span>
-            </div>
-            <div class="status-item">
-                <span>残り:</span>
-                <span class="status-value" id="remaining">24</span>
-            </div>
-            <div class="status-item">
-                <span>コンボ:</span>
-                <span class="status-value" id="combo">0</span>
-            </div>
-        </div>
+<div id="consultation-card">
+  <div id="visitor-name"></div>
+  <div id="consultation-text"></div>
+</div>
+<div id="advice-buttons" class="advice-buttons">
+  <button onclick="selectAdvice(0)" id="advice1"></button>
+  <button onclick="selectAdvice(1)" id="advice2"></button>
+  <button onclick="selectAdvice(2)" id="advice3"></button>
+</div>
+<div id="result" class="result" style="display:none;">
+  <div id="result-text"></div>
+  <div id="result-message"></div>
+  <div id="selected-advice"></div>
+  <button onclick="nextConsultation()">次へ</button>
+</div>
 
-        <!-- メインの相談カード -->
-        <div id="consultation-card" class="consultation-card">
-            <div class="visitor-info">
-                <div class="visitor-icon" id="visitor-icon">👤</div>
-                <div class="visitor-name" id="visitor-name">相談者</div>
-            </div>
-            <div class="consultation-text" id="consultation-text">
-                相談内容がここに表示されます
-            </div>
-        </div>
+<script>
+const MAX_LINE_LENGTH = 25;
+function formatAdviceText(text){
+  let t=text.trim();
+  if(t.length>MAX_LINE_LENGTH*2){t=t.slice(0,MAX_LINE_LENGTH*2-1)+'…';}
+  if(t.length>MAX_LINE_LENGTH){return t.slice(0,MAX_LINE_LENGTH)+"\n"+t.slice(MAX_LINE_LENGTH);}
+  return t;
+}
 
-        <!-- アドバイス選択ボタン -->
-        <div id="advice-buttons" class="advice-buttons">
-            <button class="advice-btn" id="advice1" onclick="selectAdvice(0)">
-                アドバイス1
-            </button>
-            <button class="advice-btn" id="advice2" onclick="selectAdvice(1)">
-                アドバイス2
-            </button>
-            <button class="advice-btn" id="advice3" onclick="selectAdvice(2)">
-                アドバイス3
-            </button>
-        </div>
+const consultations = [
+ { name:"田中さん（会社員）", icon:"👨‍💼", traits:["真面目","ストレス"], problem:"仕事でのストレスが溜まり、毎日が辛く感じます。", preferredType:"共感",
+   adviceOptions:[
+     {text:"それは大変ですね。まず今夜ぐっすり眠ることを考えましょう",type:"共感",effects:{compassion:2},reaction:"「少し気持ちが楽になりました」",aftermath:"数日後、彼は休息を大切にするようになりました。"},
+     {text:"問題の根本は何ですか？紙に書き出してみましょう",type:"解決",effects:{truth:2},reaction:"「整理してみます」",aftermath:"彼はノートに悩みを書き出し、解決策を見つけました。"},
+     {text:"滝に打たれて魂を浄化しましょう",type:"奇抜",effects:{quest:1},reaction:"「えっ、滝ですか？」",aftermath:"滝行に挑戦したものの、風邪をひいてしまいました。"}
+   ]},
+ { name:"佐藤さん（主婦）", icon:"👩", traits:["家族思い","感情的"], problem:"家族との関係がうまくいかず、孤独を感じています。", preferredType:"解決",
+   adviceOptions:[
+     {text:"相手の気持ちを想像して手紙を書いてみましょう",type:"共感",effects:{compassion:2},reaction:"「手紙なら素直に書けそうです」",aftermath:"後日、家族と静かに話し合う時間が持てました。"},
+     {text:"家庭のルールを紙に書いて話し合いましょう",type:"解決",effects:{truth:2},reaction:"「ルールを決めるのも大事ですね」",aftermath:"家族会議でお互いの気持ちを共有できたようです。"},
+     {text:"滝に打たれて魂を浄化しましょう",type:"奇抜",effects:{quest:1},reaction:"「いや、滝はちょっと…」",aftermath:"特に変化はなかったようです。"}
+   ]},
+ { name:"鈴木さん（大学生）", icon:"👨‍🎓", traits:["恋愛至上主義"], problem:"失恋して立ち直れません。もう誰も愛せないと思います。", preferredType:"共感",
+   adviceOptions:[
+     {text:"時間が心の傷を癒してくれます。自分を大切にして、新しい出会いを信じてください",type:"共感",effects:{compassion:1,impermanence:1},reaction:"「少し希望が見えてきました」",aftermath:"ゆっくりと前を向けるようになったようです。"},
+     {text:"元彼の家の前で歌を歌いましょう",type:"奇抜",effects:{quest:2},reaction:"「いや、それは恥ずかしいです…」",aftermath:"彼は歌わなかったが、代わりにカラオケで発散したそうです。"},
+     {text:"問題の根本は何ですか？紙に書き出してみましょう",type:"解決",effects:{truth:1},reaction:"「感情を整理するのも大事ですね」",aftermath:"ノートに気持ちを書くことで心が整理できました。"}
+   ]}
+];
+consultations.forEach(c=>c.adviceOptions.forEach(o=>{o.text=formatAdviceText(o.text);}));
 
-        <!-- 結果表示 -->
-        <div id="result" class="result hidden">
-            <div class="result-text" id="result-text"></div>
-            <div class="result-message" id="result-message"></div>
-            <div class="selected-advice" id="selected-advice"></div>
-            <button class="next-btn" onclick="nextConsultation()">次の相談者へ</button>
-        </div>
+let currentConsultation=0;
+let score=0;
+let remainingVisitors=consultations.length;
+let combo=0;
+let maxCombo=0;
+let totalCorrect=0;
+let totalIncorrect=0;
+let playerStats={compassion:0,truth:0,impermanence:0,quest:0};
 
-        <!-- ゲーム終了画面 -->
-        <div id="game-over" class="game-over hidden">
-            <h2>お疲れ様でした！</h2>
-            <div class="final-score">
-                最終感謝ポイント: <span id="final-score">0</span>
-            </div>
-            <div class="rating" id="rating"></div>
-            <button class="restart-btn" onclick="restartGame()">もう一度挑戦</button>
-        </div>
-    </div>
+function initGame(){
+  currentConsultation=0;
+  score=0;
+  remainingVisitors=consultations.length;
+  combo=0;
+  maxCombo=0;
+  totalCorrect=0;
+  totalIncorrect=0;
+  playerStats={compassion:0,truth:0,impermanence:0,quest:0};
+  updateDisplay();
+  showConsultation();
+}
 
-    <script>
-        const MAX_LINE_LENGTH = 25;
-        function formatAdviceText(text) {
-            let t = text.trim();
-            if (t.length > MAX_LINE_LENGTH * 2) {
-                t = t.slice(0, MAX_LINE_LENGTH * 2 - 1) + '…';
-            }
-            if (t.length > MAX_LINE_LENGTH) {
-                return t.slice(0, MAX_LINE_LENGTH) + "\n" + t.slice(MAX_LINE_LENGTH);
-            }
-            return t;
-        }
-        // 相談データ
-        const consultations = [
-            {
-                name: "田中さん（会社員）",
-                icon: "👨‍💼",
-                problem: "仕事でのストレスが溜まり、毎日が辛く感じます。",
-                advice: [
-                    "会社を辞めて無人島に移住しましょう",
-                    "深呼吸をして、今この瞬間に集中してみてください。小さな幸せを見つけましょう",
-                    "上司に説教をしましょう"
-                ],
-                correct: 1,
-                successMessage: "「心が少し軽くなりました」",
-                failureMessage: "「無人島って...Wi-Fiもないんですよ？」"
-            },
-            {
-                name: "佐藤さん（主婦）",
-                icon: "👩",
-                problem: "家族との関係がうまくいかず、孤独を感じています。",
-                advice: [
-                    "家族を捨てて新しい人生を始めましょう",
-                    "相手の気持ちを理解しようと努め、感謝の気持ちを伝えてみてください",
-                    "家族全員を洗脳しましょう"
-                ],
-                correct: 1,
-                successMessage: "「家族に感謝を伝えてみます」",
-                failureMessage: "「洗脳って...それドラマの世界ですよ？」"
-            },
-            {
-                name: "鈴木さん（大学生）",
-                icon: "👨‍🎓",
-                problem: "失恋して立ち直れません。もう誰も愛せないと思います。",
-                advice: [
-                    "元彼の家の前で歌を歌いましょう",
-                    "時間が心の傷を癒してくれます。自分を大切にして、新しい出会いを信じてください",
-                    "元彼のSNSを毎日チェックしましょう"
-                ],
-                correct: 1,
-                successMessage: "「時間をかけて癒していきます」",
-                failureMessage: "「家の前で歌って...近所迷惑になりますよ？」"
-            },
-            {
-                name: "高橋さん（サラリーマン）",
-                icon: "👨‍💼",
-                problem: "お金の悩みで夜も眠れません。将来が不安です。",
-                advice: [
-                    "お金がすべてではありません。今あるものに感謝し、必要以上に心配しないでください",
-                    "宝くじを買いまくりましょう",
-                    "全財産を賭けましょう"
-                ],
-                correct: 0,
-                successMessage: "「今あるものに感謝してみます」",
-                failureMessage: "「全財産を賭けるって...破産しますよ？」"
-            },
-            {
-                name: "伊藤さん（会社員）",
-                icon: "👤",
-                problem: "健康を損ない、将来への希望を失っています。",
-                advice: [
-                    "病気を受け入れ、今できることに集中しましょう。小さな喜びを大切にしてください",
-                    "諦めて何もしないでいましょう",
-                    "病気のことは考えないでください"
-                ],
-                correct: 0,
-                successMessage: "「今できることから始めてみます」",
-                failureMessage: "「何もしないって...人生が終わってしまいます」"
-            },
-            {
-                name: "渡辺さん（母親）",
-                icon: "👩‍👧",
-                problem: "子育てに疲れて、イライラしてしまいます。",
-                advice: [
-                    "子供を祖父母に預けっぱなしにしましょう",
-                    "子育ては修行です。深呼吸をして、子供の成長を見守る心を持ちましょう",
-                    "子供に甘いものを与えまくりましょう"
-                ],
-                correct: 1,
-                successMessage: "「子供の成長を見守ります」",
-                failureMessage: "「預けっぱなしって...親の責任放棄ですよ？」"
-            },
-            {
-                name: "小林さん（OL）",
-                icon: "👩‍💼",
-                problem: "友人との関係で悩んでいます。信頼できる人がいません。",
-                advice: [
-                    "全員を敵だと思いましょう",
-                    "少しずつでも心を開き、相手の良いところを見つけてみてください",
-                    "友達のSNSを毎日チェックしましょう"
-                ],
-                correct: 1,
-                successMessage: "「少しずつ心を開いてみます」",
-                failureMessage: "「SNSチェックって...ストーカー行為ですよ？」"
-            },
-            {
-                name: "池田さん（学生）",
-                icon: "👨‍🎓",
-                problem: "自分の価値がわからず、存在意義を見失っています。",
-                advice: [
-                    "あなたの存在そのものに価値があります。小さなことでも人の役に立ってみてください",
-                    "引きこもりを続けましょう",
-                    "世界征服を目指しましょう"
-                ],
-                correct: 0,
-                successMessage: "「小さなことから始めてみます」",
-                failureMessage: "「引きこもりって...現実逃避ですよ？」"
-            },
-            {
-                name: "橋本さん（会社員）",
-                icon: "👨‍💼",
-                problem: "完璧主義で、少しのミスも許せません。",
-                advice: [
-                    "完璧を目指すのは良いことです",
-                    "不完全さも美しさの一部です。自分を許すことも大切です",
-                    "ミスをした部下を説教しまくりましょう"
-                ],
-                correct: 1,
-                successMessage: "「不完全な自分も受け入れてみます」",
-                failureMessage: "「説教しまくるって...パワハラですよ？」"
-            },
-            {
-                name: "山口さん（主婦）",
-                icon: "👩",
-                problem: "物事が思い通りにいかず、いつもイライラしています。",
-                advice: [
-                    "思い通りにいかないのが人生です。現実を受け入れて心を平静に保ちましょう",
-                    "家族に八つ当たりしましょう",
-                    "家の家具を買い替えましょう"
-                ],
-                correct: 0,
-                successMessage: "「現実を受け入れて心を落ち着かせます」",
-                failureMessage: "「家具を買い替えるって...家計に響きますよ？」"
-            },
-            {
-                name: "松本さん（高校生）",
-                icon: "👨‍🎓",
-                problem: "勉強についていけず、将来に不安を感じています。",
-                advice: [
-                    "勉強は無駄です",
-                    "一歩ずつ進めば必ず道は開けます。今日できることから始めてみてください",
-                    "学校をサボりまくりましょう"
-                ],
-                correct: 1,
-                successMessage: "「一歩ずつ頑張ってみます」",
-                failureMessage: "「サボるって...留年しますよ？」"
-            },
-            {
-                name: "中村さん（退職者）",
-                icon: "👴",
-                problem: "老いていく自分を受け入れられません。",
-                advice: [
-                    "年齢を重ねることも人生の美しさです。今までの経験を大切にしてください",
-                    "若さだけが価値です",
-                    "若返りサプリを飲みまくりましょう"
-                ],
-                correct: 0,
-                successMessage: "「人生の経験を大切にします」",
-                failureMessage: "「若返りサプリって...効果不明ですよ？」"
-            },
-            {
-                name: "木村さん（新入社員）",
-                icon: "👨‍💼",
-                problem: "人前で話すのが怖くて、自分の意見が言えません。",
-                advice: [
-                    "一生黙っていればいいのです",
-                    "小さな一歩から始めましょう。自分の気持ちを大切に、少しずつ表現してみてください",
-                    "会社をサボりまくりましょう"
-                ],
-                correct: 1,
-                successMessage: "「少しずつ表現してみます」",
-                failureMessage: "「サボるって...クビになりますよ？」"
-            },
-            {
-                name: "清水さん（学生）",
-                icon: "👩‍🎓",
-                problem: "周りの人と比較して、いつも劣等感を感じます。",
-                advice: [
-                    "他人と比べることをやめ、自分の歩みを大切にしてください。あなたはあなたです",
-                    "もっと他人を意識して競争しましょう",
-                    "SNSで自慢の投稿をしましょう"
-                ],
-                correct: 0,
-                successMessage: "「自分の歩みを大切にします」",
-                failureMessage: "「自慢の投稿って...嫌われますよ？」"
-            },
-            {
-                name: "吉田さん（主婦）",
-                icon: "👩",
-                problem: "過去の過ちを忘れられず、自分を責め続けています。",
-                advice: [
-                    "過去は変えられません。今この瞬間から新しい歩みを始めてください",
-                    "一生自分を責め続けるべきです",
-                    "過去のことを忘れまくりましょう"
-                ],
-                correct: 0,
-                successMessage: "「今から新しく歩んでみます」",
-                failureMessage: "「忘れまくるって...記憶喪失ですよ？」"
-            },
-            {
-                name: "森さん（会社員）",
-                icon: "🤔",
-                problem: "人生に意味を見つけられず、毎日がむなしく感じます。",
-                advice: [
-                    "人生に意味なんてありません",
-                    "意味は自分で作るものです。小さな親切や優しさから始めてみてください",
-                    "UFOを探しに行きましょう"
-                ],
-                correct: 1,
-                successMessage: "「小さな親切から始めてみます」",
-                failureMessage: "「UFOって...オカルトの世界ですよ？」"
-            },
-            {
-                name: "石川さん（医師）",
-                icon: "👨‍⚕️",
-                problem: "周りの期待に応えられず、プレッシャーを感じています。",
-                advice: [
-                    "期待に応えることが人生の目的です",
-                    "自分のペースで歩んでください。他人の期待より、自分の心の声を大切にしましょう",
-                    "患者を放置しましょう"
-                ],
-                correct: 1,
-                successMessage: "「自分のペースで歩んでみます」",
-                failureMessage: "「期待に応えることが目的って...プレッシャー増えますよ？」"
-            },
-            {
-                name: "山田さん（被災者）",
-                icon: "😢",
-                problem: "災害で大切なものを失い、絶望しています。",
-                advice: [
-                    "失ったものは二度と戻りません。悲しみを抱えながらも、今ある命を大切にしてください",
-                    "すべてを諦めるべきです",
-                    "過去の写真を見まくりましょう"
-                ],
-                correct: 0,
-                successMessage: "「命を大切に生きてみます」",
-                failureMessage: "「諦めるべきって...絶望的ですよ？」"
-            },
-            {
-                name: "藤田さん（教師）",
-                icon: "👨‍🏫",
-                problem: "怒りっぽい性格を直したいのですが、コントロールできません。",
-                advice: [
-                    "怒りを感じた時は深呼吸をして、心を静めてください。怒りの奥にある気持ちを見つめましょう",
-                    "怒りは自然なので出し続けましょう",
-                    "生徒に説教しまくりましょう"
-                ],
-                correct: 0,
-                successMessage: "「心を静めて見つめてみます」",
-                failureMessage: "「出し続けるって...暴力を助長しますよ？」"
-            },
-            {
-                name: "野村さん（芸術家）",
-                icon: "🎨",
-                problem: "夢を追いかけていますが、現実との差に苦しんでいます。",
-                advice: [
-                    "夢と現実のバランスを取りながら、諦めずに歩み続けてください。小さな進歩を大切にしましょう",
-                    "夢は諦めるべきです",
-                    "現実を完全に無視しましょう"
-                ],
-                correct: 0,
-                successMessage: "「バランスを取りながら歩んでみます」",
-                failureMessage: "「諦めるって...人生が終わってしまいますよ？」"
-            },
-            {
-                name: "メジェドさん（商人）",
-                icon: "🧔",
-                problem: "商売がうまくいかず、家族を養えません。",
-                advice: [
-                    "商売の基本に立ち返り、お客様のことを考えてみてください。誠実さが一番の財産です",
-                    "もっと強引に商売をしましょう",
-                    "偽物を売りましょう"
-                ],
-                correct: 0,
-                successMessage: "「誠実さを大切にします」",
-                failureMessage: "「強引にって...詐欺ですよ？」"
-            },
-            {
-                name: "宇宙人さん",
-                icon: "👽",
-                problem: "地球人とのコミュニケーションがうまくいきません。",
-                advice: [
-                    "地球人の文化を理解しようと努めてください。違いを認め合うことが大切です",
-                    "地球人を洗脳しましょう",
-                    "地球を観光しましょう"
-                ],
-                correct: 0,
-                successMessage: "「地球人の文化を理解してみます」",
-                failureMessage: "「洗脳って...侵略行為ですよ？」"
-            },
-            {
-                name: "猫さんたち",
-                icon: "🐱",
-                problem: "他の猫たちと縄張り争いをしています。",
-                advice: [
-                    "縄張りを分け合って、共存の道を探してみてください。平和が一番です",
-                    "他の猫を追い出しましょう",
-                    "猫同士で喧嘩をしましょう"
-                ],
-                correct: 0,
-                successMessage: "「共存の道を探してみます」",
-                failureMessage: "「追い出すって...縄張り争いですよ？」"
-            },
-            {
-                name: "魔王さん",
-                icon: "👹",
-                problem: "世界征服がうまくいかず、部下に失望されています。",
-                advice: [
-                    "部下の気持ちを理解し、みんなで協力して目標を達成しましょう。リーダーシップが大切です",
-                    "部下を説教しましょう",
-                    "世界を破壊しましょう"
-                ],
-                correct: 0,
-                successMessage: "「部下と協力してみます」",
-                failureMessage: "「説教って...部下が辞めてしまいますよ？」"
-            }
-        ];
+function updateDisplay(){
+  document.getElementById('score').textContent=score;
+  document.getElementById('remaining').textContent=remainingVisitors;
+  document.getElementById('combo').textContent=combo;
+  document.getElementById('stat-compassion').textContent=playerStats.compassion;
+  document.getElementById('stat-truth').textContent=playerStats.truth;
+  document.getElementById('stat-impermanence').textContent=playerStats.impermanence;
+  document.getElementById('stat-quest').textContent=playerStats.quest;
+}
 
-        const specialConsultations = {
-            5: {
-                name: "餓鬼",
-                icon: "👻",
-                problem: "常に飢えて心が満たされません。どうすれば良いでしょうか？",
-                advice: [
-                    "食べ放題に行きましょう",
-                    "欲を手放し、施しを受け入れましょう",
-                    "人の食べ物を奪いましょう"
-                ],
-                correct: 1,
-                successMessage: "「少し心が満たされました」",
-                failureMessage: "「食べ放題って...さらに欲が出てしまいますよ？」"
-            },
-            7: {
-                name: "阿修羅",
-                icon: "⚔️",
-                problem: "怒りが抑えられず、常に戦いを求めてしまいます。どうすれば静まりますか？",
-                advice: [
-                    "世界征服を目指しましょう",
-                    "怒りを静め、争いを手放しましょう",
-                    "もっと戦いましょう"
-                ],
-                correct: 1,
-                successMessage: "「争いよりも静けさを選びます」",
-                failureMessage: "「世界征服って...さらに戦が増えるだけです！」"
-            },
-            9: {
-                name: "地獄の鬼",
-                icon: "👹",
-                problem: "地獄での責め苦が忙しく、心が休まりません。どうすれば良いですか？",
-                advice: [
-                    "人間界で息抜きしましょう",
-                    "苦しむ者を助ける心を持ちましょう",
-                    "責め苦をさらに強めましょう"
-                ],
-                correct: 1,
-                successMessage: "「少し慈悲の心が芽生えました」",
-                failureMessage: "「息抜きって...地獄の仕事をサボれません！」"
-            }
-        };
+function showConsultation(){
+  const c=consultations[currentConsultation];
+  document.getElementById('visitor-name').textContent=c.name;
+  document.getElementById('consultation-text').textContent=c.problem;
+  const buttons=document.querySelectorAll('.advice-buttons button');
+  c.adviceOptions.forEach((o,i)=>{
+    buttons[i].textContent=o.text;
+    buttons[i].style.display='block';
+  });
+  document.getElementById('result').style.display='none';
+  document.getElementById('selected-advice').textContent='';
+  document.getElementById('advice-buttons').style.display='flex';
+}
 
-        // 僧侶の回答を最大二行に整形
-        consultations.forEach(c => {
-            c.advice = c.advice.map(formatAdviceText);
-        });
-        Object.values(specialConsultations).forEach(c => {
-            c.advice = c.advice.map(formatAdviceText);
-        });
+function effectsToText(effects){
+  const names={compassion:'慈悲',truth:'真理',impermanence:'無常観',quest:'求道心'};
+  return Object.entries(effects).map(([k,v])=>names[k]+(v>=0?'+':'')+v).join(' ');
+}
 
-        // ゲーム状態
-        let currentConsultation = 0;
-        let score = 0;
-        let remainingVisitors = consultations.length;
-        let gameConsultations = [];
-        let combo = 0;
-        let maxCombo = 0;
-        let totalCorrect = 0;
-        let totalIncorrect = 0;
+function applyEffects(effects){
+  for(const [k,v] of Object.entries(effects)){playerStats[k]+=v;}
+}
 
-        // ゲーム初期化
-        function initGame() {
-            // 24種類の相談者をランダムな順序で選択
-            gameConsultations = [...consultations].sort(() => Math.random() - 0.5);
+function selectAdvice(index){
+  const c=consultations[currentConsultation];
+  const option=c.adviceOptions[index];
+  applyEffects(option.effects);
+  const result=document.getElementById('result');
+  const resultText=document.getElementById('result-text');
+  const resultMessage=document.getElementById('result-message');
+  const selected=document.getElementById('selected-advice');
+  document.getElementById('advice-buttons').style.display='none';
 
-            currentConsultation = 0;
-            score = 0;
-            remainingVisitors = consultations.length;
-            combo = 0;
-            maxCombo = 0;
-            totalCorrect = 0;
-            totalIncorrect = 0;
+  if(option.type===c.preferredType){
+    totalCorrect++; combo++; if(combo>maxCombo)maxCombo=combo;
+    score+=1; result.className='result success';
+    resultText.textContent='✨ 良い導きです！ +1ポイント ✨';
+  }else{
+    totalIncorrect++; combo=0;
+    result.className='result failure';
+    resultText.textContent='😔 もう少し考えてみましょう... 😔';
+  }
+  resultMessage.textContent=option.reaction;
+  selected.textContent='その後: '+option.aftermath+' ('+effectsToText(option.effects)+')';
+  result.style.display='block';
+  updateDisplay();
+}
 
-            updateDisplay();
-            showConsultation();
-        }
+function nextConsultation(){
+  currentConsultation++; remainingVisitors--;
+  if(currentConsultation>=consultations.length){
+    showGameOver();
+  }else{
+    document.getElementById('advice-buttons').style.display='flex';
+    showConsultation();
+  }
+}
 
-        // 表示を更新
-        function updateDisplay() {
-            document.getElementById('score').textContent = score;
-            document.getElementById('remaining').textContent = remainingVisitors;
-            document.getElementById('combo').textContent = combo;
-        }
+function showGameOver(){
+  document.getElementById('consultation-card').style.display='none';
+  document.getElementById('advice-buttons').style.display='none';
+  document.getElementById('result').style.display='none';
+  const accuracy=(totalCorrect/(totalCorrect+totalIncorrect))*100;
+  document.body.innerHTML+=`<h2>ゲーム終了</h2><p>最終得点:${score}</p><p>正解率:${Math.round(accuracy)}%</p>`;
+}
 
-        // コンボエフェクトを表示
-        function showComboEffect() {
-            if (combo >= 3) {
-                const comboElement = document.createElement('div');
-                comboElement.className = 'combo-effect';
-                comboElement.textContent = `🔥 ${combo}連続! 🔥`;
-                
-                document.body.appendChild(comboElement);
-                
-                setTimeout(() => {
-                    document.body.removeChild(comboElement);
-                }, 2000);
-            }
-        }
-
-        // 相談を表示
-        function showConsultation() {
-            const consultation = gameConsultations[currentConsultation];
-
-            document.getElementById('visitor-name').textContent = consultation.name;
-            document.getElementById('visitor-icon').textContent = consultation.icon;
-            document.getElementById('consultation-text').textContent = consultation.problem;
-
-            // アドバイスボタンを設定
-            const adviceButtons = document.querySelectorAll('.advice-btn');
-            consultation.advice.forEach((advice, index) => {
-                adviceButtons[index].textContent = advice;
-                adviceButtons[index].style.display = 'block';
-            });
-
-            // 結果を非表示
-            document.getElementById('result').classList.add('hidden');
-            document.getElementById('selected-advice').textContent = '';
-            document.getElementById('advice-buttons').style.display = 'flex';
-        }
-
-        // アドバイスを選択
-        function selectAdvice(selectedIndex) {
-            const consultation = gameConsultations[currentConsultation];
-            const resultElement = document.getElementById('result');
-            const resultText = document.getElementById('result-text');
-            const resultMessage = document.getElementById('result-message');
-            const selectedAdviceElement = document.getElementById('selected-advice');
-
-            // ボタンを非表示
-            document.getElementById('advice-buttons').style.display = 'none';
-
-            if (selectedIndex === consultation.correct) {
-                // 正解
-                totalCorrect++;
-                combo++;
-                if (combo > maxCombo) maxCombo = combo;
-                
-                // コンボボーナス計算
-                let comboBonus = Math.floor(combo / 3);
-                let pointsEarned = 1 + comboBonus;
-                
-                score += pointsEarned;
-                
-                resultElement.className = 'result success';
-                resultText.textContent = `✨ 素晴らしいアドバイスです！ +${pointsEarned}ポイント ✨`;
-                resultMessage.textContent = consultation.successMessage;
-                selectedAdviceElement.textContent = '';
-
-                // コンボエフェクト表示
-                showComboEffect();
-                
-            } else {
-                // 不正解
-                totalIncorrect++;
-                combo = 0;
-                
-                resultElement.className = 'result failure';
-                resultText.textContent = '😔 もう少し考えてみましょう... 😔';
-                resultMessage.textContent = consultation.failureMessage;
-                selectedAdviceElement.textContent = `あなた: ${consultation.advice[selectedIndex]}`;
-
-                if (specialConsultations[totalIncorrect]) {
-                    gameConsultations.splice(currentConsultation + 1, 0, specialConsultations[totalIncorrect]);
-                    remainingVisitors++;
-                }
-            }
-
-            resultElement.classList.remove('hidden');
-            updateDisplay();
-        }
-
-        // 次の相談者へ
-        function nextConsultation() {
-            currentConsultation++;
-            remainingVisitors--;
-
-            if (currentConsultation >= gameConsultations.length) {
-                // ゲーム終了
-                showGameOver();
-            } else {
-                showConsultation();
-            }
-        }
-
-        // ゲーム終了画面
-        function showGameOver() {
-            document.getElementById('consultation-card').style.display = 'none';
-            document.getElementById('advice-buttons').style.display = 'none';
-            document.getElementById('result').classList.add('hidden');
-
-            const gameOverElement = document.getElementById('game-over');
-            const finalScoreElement = document.getElementById('final-score');
-            const ratingElement = document.getElementById('rating');
-
-            finalScoreElement.textContent = score;
-            
-            // 評価を決定
-            let rating = '';
-            let ratingText = '';
-            const accuracy = (totalCorrect / (totalCorrect + totalIncorrect)) * 100;
-            
-            if (accuracy >= 90 && maxCombo >= 5) {
-                rating = '🏆 伝説の僧侶 🏆';
-                ratingText = 'すべての衆生を救う伝説の僧侶です！';
-            } else if (accuracy >= 80 && maxCombo >= 3) {
-                rating = '🌟 高僧 🌟';
-                ratingText = '多くの人々を導く高僧です！';
-            } else if (accuracy >= 70) {
-                rating = '✨ 修行僧 ✨';
-                ratingText = '着実に成長している修行僧です！';
-            } else if (accuracy >= 50) {
-                rating = '🙏 初心者僧侶 🙏';
-                ratingText = 'まだまだ修行が必要です。';
-            } else {
-                rating = '😅 迷える僧侶 😅';
-                ratingText = 'もっと勉強が必要です...';
-            }
-            
-            const statsHTML = `
-                <div style="margin-top: 15px; font-size: 0.9em;">
-                    <div>最大コンボ: ${maxCombo}</div>
-                    <div>正解率: ${Math.round(accuracy)}% (${totalCorrect}/${totalCorrect + totalIncorrect})</div>
-                </div>
-            `;
-            
-            ratingElement.innerHTML = `<div>${rating}</div><div style="margin-top: 8px; font-size: 0.9em;">${ratingText}</div>${statsHTML}`;
-
-            gameOverElement.classList.remove('hidden');
-        }
-
-        // ゲーム再開
-        function restartGame() {
-            document.getElementById('game-over').classList.add('hidden');
-            document.getElementById('consultation-card').style.display = 'block';
-            initGame();
-        }
-
-        // ページ読み込み時にゲーム開始
-        window.onload = function() {
-            initGame();
-        };
-    </script>
+window.onload=initGame;
+</script>
 </body>
 </html>
