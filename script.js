@@ -9,9 +9,7 @@ if (typeof document !== 'undefined') {
     const scoreEl = document.getElementById('score');
     const drawBtn = document.getElementById('draw');
 
-    const bgm = new Audio('audio/BGM.mp3');
-    bgm.loop = true;
-    bgm.play();
+    const bgm = document.getElementById('bgm');
 
     const flipSound = new Audio('audio/mekuru.mp3');
     const bouzuSound = new Audio('audio/bouzu.mp3');
@@ -24,6 +22,9 @@ if (typeof document !== 'undefined') {
     }
 
     drawBtn.addEventListener('click', () => {
+      if (bgm.paused) {
+        bgm.play();
+      }
       flipSound.currentTime = 0;
       flipSound.play();
 
