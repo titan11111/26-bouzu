@@ -4,6 +4,7 @@ if (typeof document !== 'undefined') {
     let score = 0;
 
     const message = document.getElementById('message');
+    const cardImage = document.getElementById('card-image');
     const remaining = document.getElementById('remaining');
     const scoreEl = document.getElementById('score');
     const drawBtn = document.getElementById('draw');
@@ -28,6 +29,14 @@ if (typeof document !== 'undefined') {
 
       const index = Math.floor(Math.random() * deck.length);
       const card = deck.splice(index, 1)[0];
+
+      const images = {
+        '坊主': 'images/monk.png',
+        '姫': 'images/princess.png',
+        '殿': 'images/nobleman.png'
+      };
+      cardImage.src = images[card];
+      cardImage.style.display = 'block';
 
       if (card === '坊主') {
         bouzuSound.play();
