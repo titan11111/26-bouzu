@@ -1,12 +1,12 @@
 if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', () => {
     const deck = ['坊主', '姫', '殿', '殿', '殿', '殿', '殿', '殿', '殿', '殿'];
-    let score = 0;
 
     const message = document.getElementById('message');
     const cardImage = document.getElementById('card-image');
     const remaining = document.getElementById('remaining');
-    const scoreEl = document.getElementById('score');
+    const playerCountEl = document.getElementById('player-count');
+    const cpuCountEl = document.getElementById('cpu-count');
     const drawBtn = document.getElementById('draw');
 
     const bgm = document.getElementById('bgm');
@@ -16,12 +16,27 @@ if (typeof document !== 'undefined') {
     const himeSound = new Audio('audio/hime.mp3');
     const tonoSound = new Audio('audio/otoko.mp3');
 
-    function updateDisplay() {
-      remaining.textContent = `残り枚数: ${deck.length}`;
-      scoreEl.textContent = `得点: ${score}`;
+    const playerCards = [];
+    const cpuCards = [];
+    let turn = 'player';
+
+    function shuffle(array) {
+      array.sort(() => Math.random() - 0.5);
     }
 
-    drawBtn.addEventListener('click', () => {
+    function updateDisplay() {
+      remaining.textContent = `残り枚数: ${deck.length}`;
+      playerCountEl.textContent = `プレイヤー: ${playerCards.length}枚`;
+      cpuCountEl.textContent = `CPU: ${cpuCards.length}枚`;
+    }
+
+    function drawCard(current) {
+      if (deck.length === 0) {
+        message.textContent = `すべての札をめくりました。プレイヤー: ${playerCards.length}枚 CPU: ${cpuCards.length}枚`;
+        drawBtn.disabled = true;
+        return;
+      }
+
       if (bgm.paused) {
         bgm.play();
       }
@@ -39,26 +54,47 @@ if (typeof document !== 'undefined') {
       cardImage.src = images[card];
       cardImage.style.display = 'block';
 
+      const pile = current === 'player' ? playerCards : cpuCards;
+
       if (card === '坊主') {
         bouzuSound.play();
-        message.textContent = '坊主！ゲーム終了';
-        drawBtn.disabled = true;
+        message.textContent = current === 'player' ? '坊主！カードを山札に戻します' : 'CPUが坊主！カードを山札に戻します';
+        deck.push(...pile, card);
+        pile.length = 0;
+        shuffle(deck);
       } else {
         if (card === '姫') {
           himeSound.play();
-          score += 2;
-          message.textContent = '姫を引きました';
         } else {
           tonoSound.play();
-          score++;
-          message.textContent = `${card}を引きました`;
         }
-        if (deck.length === 0) {
-          message.textContent = 'すべての札をめくりました。勝利！';
-          drawBtn.disabled = true;
-        }
+        pile.push(card);
+        message.textContent = current === 'player' ? `${card}を引きました` : `CPUが${card}を引きました`;
       }
+
       updateDisplay();
+
+      if (deck.length === 0) {
+        message.textContent = `すべての札をめくりました。プレイヤー: ${playerCards.length}枚 CPU: ${cpuCards.length}枚`;
+        drawBtn.disabled = true;
+      }
+    }
+
+    drawBtn.addEventListener('click', () => {
+      if (turn !== 'player') return;
+      drawBtn.disabled = true;
+      drawCard('player');
+      if (deck.length === 0) return;
+      turn = 'cpu';
+      setTimeout(() => {
+        drawCard('cpu');
+        if (deck.length === 0) {
+          return;
+        }
+        turn = 'player';
+        drawBtn.disabled = false;
+        message.textContent = 'カードをめくってください';
+      }, 1000);
     });
 
     updateDisplay();
