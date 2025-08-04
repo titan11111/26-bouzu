@@ -14,3 +14,9 @@ button {
   margin: 20px 0;
   font-size: 1.2em;
 }
+
+#card-image {
+  width: 25%;
+  height: auto;
+  max-width: 100%;
+}
