@@ -1,6 +1,6 @@
 if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', () => {
-    const deck = ['坊主', '殿', '殿', '殿', '殿', '殿', '殿', '殿', '殿', '殿'];
+    const deck = ['坊主', '姫', '殿', '殿', '殿', '殿', '殿', '殿', '殿', '殿'];
     let score = 0;
 
     const message = document.getElementById('message');
@@ -8,21 +8,41 @@ if (typeof document !== 'undefined') {
     const scoreEl = document.getElementById('score');
     const drawBtn = document.getElementById('draw');
 
+    const bgm = new Audio('audio/BGM.mp3');
+    bgm.loop = true;
+    bgm.play();
+
+    const flipSound = new Audio('audio/mekuru.mp3');
+    const bouzuSound = new Audio('audio/bouzu.mp3');
+    const himeSound = new Audio('audio/hime.mp3');
+    const tonoSound = new Audio('audio/otoko.mp3');
+
     function updateDisplay() {
       remaining.textContent = `残り枚数: ${deck.length}`;
       scoreEl.textContent = `得点: ${score}`;
     }
 
     drawBtn.addEventListener('click', () => {
+      flipSound.currentTime = 0;
+      flipSound.play();
+
       const index = Math.floor(Math.random() * deck.length);
       const card = deck.splice(index, 1)[0];
 
       if (card === '坊主') {
+        bouzuSound.play();
         message.textContent = '坊主！ゲーム終了';
         drawBtn.disabled = true;
       } else {
-        score++;
-        message.textContent = `${card}を引きました`;
+        if (card === '姫') {
+          himeSound.play();
+          score += 2;
+          message.textContent = '姫を引きました';
+        } else {
+          tonoSound.play();
+          score++;
+          message.textContent = `${card}を引きました`;
+        }
         if (deck.length === 0) {
           message.textContent = 'すべての札をめくりました。勝利！';
           drawBtn.disabled = true;
