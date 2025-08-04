@@ -16,7 +16,16 @@ button {
 }
 
 #card-image {
-  width: 25%;
+  width: 37.5%;
   height: auto;
   max-width: 100%;
+}
+
+#counts {
+  margin: 10px 0;
+  font-size: 1.1em;
+}
+
+#counts span {
+  margin: 0 10px;
 }
