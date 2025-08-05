@@ -29,3 +29,24 @@ button {
 #counts span {
   margin: 0 10px;
 }
+
+.pile {
+  position: relative;
+  width: 220px;
+  height: 100px;
+  margin: 20px auto;
+}
+
+#cpu-pile {
+  margin-bottom: -80px;
+}
+
+.pile-card {
+  width: 60px;
+  position: absolute;
+  top: 0;
+}
+
+#player-pile .pile-card {
+  top: 20px;
+}

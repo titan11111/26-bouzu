@@ -7,6 +7,8 @@ if (typeof document !== 'undefined') {
     const remaining = document.getElementById('remaining');
     const playerCountEl = document.getElementById('player-count');
     const cpuCountEl = document.getElementById('cpu-count');
+    const playerPile = document.getElementById('player-pile');
+    const cpuPile = document.getElementById('cpu-pile');
     const drawBtn = document.getElementById('draw');
 
     const bgm = document.getElementById('bgm');
@@ -55,12 +57,14 @@ if (typeof document !== 'undefined') {
       cardImage.style.display = 'block';
 
       const pile = current === 'player' ? playerCards : cpuCards;
+      const pileContainer = current === 'player' ? playerPile : cpuPile;
 
       if (card === '坊主') {
         bouzuSound.play();
         message.textContent = current === 'player' ? '坊主！カードを山札に戻します' : 'CPUが坊主！カードを山札に戻します';
         deck.push(...pile, card);
         pile.length = 0;
+        pileContainer.innerHTML = '';
         shuffle(deck);
       } else {
         if (card === '姫') {
@@ -69,6 +73,11 @@ if (typeof document !== 'undefined') {
           tonoSound.play();
         }
         pile.push(card);
+        const cardElem = document.createElement('img');
+        cardElem.src = images[card];
+        cardElem.classList.add('pile-card');
+        cardElem.style.left = `${(pile.length - 1) * 20}px`;
+        pileContainer.appendChild(cardElem);
         message.textContent = current === 'player' ? `${card}を引きました` : `CPUが${card}を引きました`;
       }
 
