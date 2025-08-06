@@ -10,7 +10,7 @@ button {
   font-size: 1.2em;
 }
 
-#draw {
+#draw-button {
   background: #f0e68c;
   border: 2px solid #8b4513;
   border-radius: 8px;
@@ -18,7 +18,7 @@ button {
   transition: background 0.3s;
 }
 
-#draw:hover {
+#draw-button:hover {
   background: #fff8dc;
 }
 
@@ -34,13 +34,25 @@ button {
   max-height: 400px;
 }
 
-#counts {
-  margin: 10px 0;
-  font-size: 1.1em;
+#card-image, .pile-card {
+  box-sizing: border-box;
 }
 
-#counts span {
-  margin: 0 10px;
+.card-hime {
+  border: 4px solid pink;
+}
+
+.card-danna {
+  border: 4px solid blue;
+}
+
+.card-bozu {
+  border: 4px solid red;
+}
+
+#scoreboard {
+  margin: 10px 0;
+  font-size: 1.1em;
 }
 
 .piles {

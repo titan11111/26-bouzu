@@ -3,11 +3,10 @@ if (typeof document !== 'undefined') {
     const message = document.getElementById('message');
     const cardImage = document.getElementById('card-image');
     const remaining = document.getElementById('remaining');
-    const playerCountEl = document.getElementById('player-count');
-    const cpuCountEl = document.getElementById('cpu-count');
     const playerPile = document.getElementById('player-pile');
     const cpuPile = document.getElementById('cpu-pile');
-    const drawBtn = document.getElementById('draw');
+    const drawBtn = document.getElementById('draw-button');
+    const scoreboard = document.getElementById('scoreboard');
 
     const bgm = document.getElementById('bgm');
 
@@ -41,8 +40,7 @@ if (typeof document !== 'undefined') {
 
     function updateDisplay() {
       remaining.textContent = `残り枚数: ${deck.length}`;
-      playerCountEl.textContent = `プレイヤー: ${playerCards.length}枚`;
-      cpuCountEl.textContent = `CPU: ${cpuCards.length}枚`;
+      scoreboard.innerHTML = `Player: ${playerCards.length} cards<br>CPU: ${cpuCards.length} cards`;
     }
 
     function drawCard(current) {
@@ -63,6 +61,8 @@ if (typeof document !== 'undefined') {
       const info = cardTypes[card.type];
       cardImage.src = info.image;
       cardImage.style.display = 'block';
+      cardImage.className = '';
+      cardImage.classList.add(`card-${card.type}`);
 
       const pile = current === 'player' ? playerCards : cpuCards;
       const pileContainer = current === 'player' ? playerPile : cpuPile;
@@ -81,7 +81,7 @@ if (typeof document !== 'undefined') {
         pile.push(card);
         const cardElem = document.createElement('img');
         cardElem.src = info.image;
-        cardElem.classList.add('pile-card');
+        cardElem.classList.add('pile-card', `card-${card.type}`);
         cardElem.style.left = `${(pile.length - 1) * 20}px`;
         pileContainer.appendChild(cardElem);
         const who = current === 'player' ? 'あなた' : 'CPU';
