@@ -8,11 +8,17 @@
 </head>
 <body>
   <h1>坊主めくり</h1>
+  <details id="rules">
+    <summary>遊び方 / How to Play</summary>
+    <p>カードをめくり姫と殿を集めましょう。坊主を引くと集めたカードをすべて失います。最終的に多く集めた方が勝ちです。</p>
+  </details>
   <audio id="bgm" src="audio/BGM.mp3" loop></audio>
   <div id="message">カードをめくってください</div>
   <img id="card-image" alt="カードの画像" style="display:none" />
-  <div id="cpu-pile" class="pile"></div>
-  <div id="player-pile" class="pile"></div>
+  <div id="piles" class="piles">
+    <div id="cpu-pile" class="pile"></div>
+    <div id="player-pile" class="pile"></div>
+  </div>
   <div id="remaining"></div>
   <div id="counts">
     <span id="player-count"></span>

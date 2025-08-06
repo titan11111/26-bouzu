@@ -1,7 +1,5 @@
 if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', () => {
-    const deck = ['坊主', '姫', '殿', '殿', '殿', '殿', '殿', '殿', '殿', '殿'];
-
     const message = document.getElementById('message');
     const cardImage = document.getElementById('card-image');
     const remaining = document.getElementById('remaining');
@@ -18,6 +16,19 @@ if (typeof document !== 'undefined') {
     const himeSound = new Audio('audio/hime.mp3');
     const tonoSound = new Audio('audio/otoko.mp3');
 
+    const cardTypes = {
+      bozu: { label: '坊主', image: 'images/monk.png', sound: bouzuSound, consequence: 'カードをすべて失います' },
+      hime: { label: '姫', image: 'images/princess.png', sound: himeSound, consequence: '1枚獲得' },
+      danna: { label: '殿', image: 'images/nobleman.png', sound: tonoSound, consequence: '1枚獲得' }
+    };
+
+    const deck = [
+      { type: 'bozu' },
+      { type: 'hime' },
+      { type: 'danna' }, { type: 'danna' }, { type: 'danna' }, { type: 'danna' },
+      { type: 'danna' }, { type: 'danna' }, { type: 'danna' }, { type: 'danna' }
+    ];
+
     const playerCards = [];
     const cpuCards = [];
     let turn = 'player';
@@ -25,6 +36,8 @@ if (typeof document !== 'undefined') {
     function shuffle(array) {
       array.sort(() => Math.random() - 0.5);
     }
+
+    shuffle(deck);
 
     function updateDisplay() {
       remaining.textContent = `残り枚数: ${deck.length}`;
@@ -47,38 +60,32 @@ if (typeof document !== 'undefined') {
 
       const index = Math.floor(Math.random() * deck.length);
       const card = deck.splice(index, 1)[0];
-
-      const images = {
-        '坊主': 'images/monk.png',
-        '姫': 'images/princess.png',
-        '殿': 'images/nobleman.png'
-      };
-      cardImage.src = images[card];
+      const info = cardTypes[card.type];
+      cardImage.src = info.image;
       cardImage.style.display = 'block';
 
       const pile = current === 'player' ? playerCards : cpuCards;
       const pileContainer = current === 'player' ? playerPile : cpuPile;
 
-      if (card === '坊主') {
-        bouzuSound.play();
-        message.textContent = current === 'player' ? '坊主！カードを山札に戻します' : 'CPUが坊主！カードを山札に戻します';
-        deck.push(...pile, card);
+      if (card.type === 'bozu') {
+        info.sound.play();
+        message.innerHTML = current === 'player'
+          ? '坊主を引きました！<br>カードをすべて失います。'
+          : 'CPUが坊主を引きました！<br>CPUはカードをすべて失います。';
         pile.length = 0;
         pileContainer.innerHTML = '';
-        shuffle(deck);
+        document.body.classList.add('shake');
+        setTimeout(() => document.body.classList.remove('shake'), 500);
       } else {
-        if (card === '姫') {
-          himeSound.play();
-        } else {
-          tonoSound.play();
-        }
+        info.sound.play();
         pile.push(card);
         const cardElem = document.createElement('img');
-        cardElem.src = images[card];
+        cardElem.src = info.image;
         cardElem.classList.add('pile-card');
         cardElem.style.left = `${(pile.length - 1) * 20}px`;
         pileContainer.appendChild(cardElem);
-        message.textContent = current === 'player' ? `${card}を引きました` : `CPUが${card}を引きました`;
+        const who = current === 'player' ? 'あなた' : 'CPU';
+        message.innerHTML = `${who}は${info.label}を引きました！<br>${info.consequence}`;
       }
 
       updateDisplay();
