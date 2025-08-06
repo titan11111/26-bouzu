@@ -10,15 +10,28 @@ button {
   font-size: 1.2em;
 }
 
+#draw {
+  background: #f0e68c;
+  border: 2px solid #8b4513;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#draw:hover {
+  background: #fff8dc;
+}
+
 #message {
   margin: 20px 0;
   font-size: 1.2em;
 }
 
 #card-image {
-  width: 50%;
-  height: auto;
+  width: auto;
   max-width: 100%;
+  height: auto;
+  max-height: 400px;
 }
 
 #counts {
@@ -30,11 +43,18 @@ button {
   margin: 0 10px;
 }
 
+.piles {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
 .pile {
   position: relative;
   width: 220px;
   height: 100px;
-  margin: 20px auto;
+  margin: 20px;
 }
 
 #cpu-pile {
@@ -49,4 +69,31 @@ button {
 
 #player-pile .pile-card {
   top: 20px;
+}
+
+#rules {
+  max-width: 400px;
+  margin: 0 auto 20px;
+  text-align: left;
+}
+
+body.shake {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-10px); }
+  40%, 80% { transform: translateX(10px); }
+}
+
+@media (max-width: 600px) {
+  .piles {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #card-image {
+    width: 80%;
+  }
 }
