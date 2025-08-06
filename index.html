@@ -9,8 +9,14 @@
 <body>
   <h1>坊主めくり</h1>
   <details id="rules">
-    <summary>遊び方 / How to Play</summary>
-    <p>カードをめくり姫と殿を集めましょう。坊主を引くと集めたカードをすべて失います。最終的に多く集めた方が勝ちです。</p>
+    <summary>ルール / Rules</summary>
+    <ul>
+      <li>Use 100 illustrated cards from the Hyakunin Isshu.</li>
+      <li>Turn over one card per turn.</li>
+      <li>Female → gain 1 point.</li>
+      <li>Male → gain 1 point.</li>
+      <li>Monk (Bouzu) → lose all collected cards.</li>
+    </ul>
   </details>
   <audio id="bgm" src="audio/BGM.mp3" loop></audio>
   <div id="message">カードをめくってください</div>
@@ -20,11 +26,8 @@
     <div id="player-pile" class="pile"></div>
   </div>
   <div id="remaining"></div>
-  <div id="counts">
-    <span id="player-count"></span>
-    <span id="cpu-count"></span>
-  </div>
-  <button id="draw">カードをめくる</button>
+  <div id="scoreboard">Player: 0 cards<br>CPU: 0 cards</div>
+  <button id="draw-button">カードをめくる</button>
   <script src="script.js"></script>
 </body>
 </html>
