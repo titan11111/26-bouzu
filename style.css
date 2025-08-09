@@ -27,14 +27,8 @@ button {
   font-size: 1.2em;
 }
 
-#card-image {
-  width: auto;
-  max-width: 100%;
-  height: auto;
-  max-height: 400px;
-}
 
-#card-image, .pile-card {
+.pile-card {
   box-sizing: border-box;
 }
 
@@ -105,7 +99,4 @@ body.shake {
     align-items: center;
   }
 
-  #card-image {
-    width: 80%;
-  }
 }
