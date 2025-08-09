@@ -97,8 +97,14 @@ if (typeof document !== 'undefined') {
         cardElem.classList.add('pile-card', `card-${card.type}`);
         cardElem.style.left = `${(pile.length - 1) * 20}px`;
         pileContainer.appendChild(cardElem);
-        const who = current === 'player' ? 'あなた' : 'CPU';
-        message.innerHTML = `${who}は${info.label}を引きました！<br>${info.consequence}`;
+        if (card.type === 'danna') {
+          message.textContent = current === 'player'
+            ? 'あなたは殿を取りました'
+            : 'CPUも殿を取りました';
+        } else {
+          const who = current === 'player' ? 'あなた' : 'CPU';
+          message.innerHTML = `${who}は${info.label}を引きました！<br>${info.consequence}`;
+        }
       }
 
       updateDisplay();
