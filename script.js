@@ -40,10 +40,30 @@ if (typeof document !== 'undefined') {
       scoreboard.innerHTML = `Player: ${playerCards.length} cards<br>CPU: ${cpuCards.length} cards`;
     }
 
+    function showVictory() {
+      const overlay = document.getElementById('victory-overlay');
+      overlay.classList.add('show');
+      for (let i = 0; i < 30; i++) {
+        const petal = document.createElement('div');
+        petal.textContent = '🌸';
+        petal.className = 'sakura';
+        petal.style.left = `${Math.random() * 100}vw`;
+        petal.style.animationDelay = `${Math.random() * 5}s`;
+        overlay.appendChild(petal);
+      }
+    }
+
+    function endGame() {
+      message.textContent = `すべての札をめくりました。プレイヤー: ${playerCards.length}枚 CPU: ${cpuCards.length}枚`;
+      drawBtn.disabled = true;
+      if (playerCards.length > cpuCards.length) {
+        showVictory();
+      }
+    }
+
     function drawCard(current) {
       if (deck.length === 0) {
-        message.textContent = `すべての札をめくりました。プレイヤー: ${playerCards.length}枚 CPU: ${cpuCards.length}枚`;
-        drawBtn.disabled = true;
+        endGame();
         return;
       }
 
@@ -84,8 +104,7 @@ if (typeof document !== 'undefined') {
       updateDisplay();
 
       if (deck.length === 0) {
-        message.textContent = `すべての札をめくりました。プレイヤー: ${playerCards.length}枚 CPU: ${cpuCards.length}枚`;
-        drawBtn.disabled = true;
+        endGame();
       }
     }
 
