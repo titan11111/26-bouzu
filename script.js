@@ -16,7 +16,7 @@ if (typeof document !== 'undefined') {
 
     const cardTypes = {
       bozu: { label: '坊主', image: 'images/monk.png', sound: bouzuSound, consequence: 'カードをすべて失います' },
-      hime: { label: '姫', image: 'images/princess.png', sound: himeSound, consequence: '1枚獲得' },
+      hime: { label: '姫', image: 'images/princess.png', sound: himeSound, consequence: '相手のカードをすべて獲得' },
       danna: { label: '殿', image: 'images/nobleman.png', sound: tonoSound, consequence: '1枚獲得' }
     };
 
@@ -97,6 +97,20 @@ if (typeof document !== 'undefined') {
         cardElem.classList.add('pile-card', `card-${card.type}`);
         cardElem.style.left = `${(pile.length - 1) * 20}px`;
         pileContainer.appendChild(cardElem);
+
+        if (card.type === 'hime') {
+          const opponentPile = current === 'player' ? cpuCards : playerCards;
+          const opponentContainer = current === 'player' ? cpuPile : playerPile;
+          while (opponentPile.length > 0) {
+            const movedCard = opponentPile.shift();
+            pile.push(movedCard);
+            const movedElem = opponentContainer.firstChild;
+            opponentContainer.removeChild(movedElem);
+            movedElem.style.left = `${(pile.length - 1) * 20}px`;
+            pileContainer.appendChild(movedElem);
+          }
+        }
+
         const who = current === 'player' ? 'あなた' : 'CPU';
         message.innerHTML = `${who}は${info.label}を引きました！<br>${info.consequence}`;
       }
