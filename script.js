@@ -1,7 +1,6 @@
 if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', () => {
     const message = document.getElementById('message');
-    const cardImage = document.getElementById('card-image');
     const remaining = document.getElementById('remaining');
     const playerPile = document.getElementById('player-pile');
     const cpuPile = document.getElementById('cpu-pile');
@@ -57,10 +56,6 @@ if (typeof document !== 'undefined') {
       const index = Math.floor(Math.random() * deck.length);
       const card = deck.splice(index, 1)[0];
       const info = cardTypes[card.type];
-      cardImage.src = info.image;
-      cardImage.style.display = 'block';
-      cardImage.className = '';
-      cardImage.classList.add(`card-${card.type}`);
 
       const pile = current === 'player' ? playerCards : cpuCards;
       const pileContainer = current === 'player' ? playerPile : cpuPile;
