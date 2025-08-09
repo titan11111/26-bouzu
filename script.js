@@ -21,12 +21,10 @@ if (typeof document !== 'undefined') {
       danna: { label: '殿', image: 'images/nobleman.png', sound: tonoSound, consequence: '1枚獲得' }
     };
 
-    const deck = [
-      { type: 'bozu' },
-      { type: 'hime' },
-      { type: 'danna' }, { type: 'danna' }, { type: 'danna' }, { type: 'danna' },
-      { type: 'danna' }, { type: 'danna' }, { type: 'danna' }, { type: 'danna' }
-    ];
+    const deck = [];
+    for (let i = 0; i < 10; i++) deck.push({ type: 'bozu' });
+    for (let i = 0; i < 10; i++) deck.push({ type: 'hime' });
+    for (let i = 0; i < 80; i++) deck.push({ type: 'danna' });
 
     const playerCards = [];
     const cpuCards = [];

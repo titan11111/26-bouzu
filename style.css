@@ -64,23 +64,23 @@ button {
 
 .pile {
   position: relative;
-  width: 220px;
-  height: 100px;
+  width: 440px;
+  height: 200px;
   margin: 20px;
 }
 
 #cpu-pile {
-  margin-bottom: -80px;
+  margin-bottom: -160px;
 }
 
 .pile-card {
-  width: 60px;
+  width: 120px;
   position: absolute;
   top: 0;
 }
 
 #player-pile .pile-card {
-  top: 20px;
+  top: 40px;
 }
 
 #rules {
